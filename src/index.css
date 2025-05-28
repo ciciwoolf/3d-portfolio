@@ -9,7 +9,6 @@ html,
 body {
   width: 100dvw;
   overflow-x: hidden;
-  background-color: black;
   color: white;
   scroll-behavior: smooth;
   font-family: "Mona Sans", sans-serif;
@@ -21,12 +20,14 @@ section {
 
 @theme {
   --font-sans: "Mona Sans", sans-serif;
-  --color-white-50: #d9ecff;
+  --color-white-50: #F3EFF5; /* Magnolia - light dusky lavender */
   --color-black-50: #1c1c21;
   --color-black-100: #0e0e10;
   --color-black-200: #282732;
-  --color-blue-50: #839cb5;
-  --color-blue-100: #2d2d38;
+  --color-blue-50: #2660A4; /* Lapis Lazuli - medium */
+  --color-blue-100: #040926; /* Oxford Blue - very dark */
+  --color-light-sea-green: #2EC4B6;
+  --color-red-claret: #89043D;
 }
 
 @layer utilities {
