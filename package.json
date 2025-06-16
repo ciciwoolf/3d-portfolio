@@ -18,6 +18,7 @@
     "@tailwindcss/vite": "^4.0.14",
     "@types/three": "^0.174.0",
     "gsap": "^3.12.7",
+    "postprocessing": "^6.37.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-responsive": "^10.0.1",
