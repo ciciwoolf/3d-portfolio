@@ -20,7 +20,7 @@ const ShowcaseSection = () => {
                         </div>
                         <div className="text-content">
                             <h2>
-                                The Art of Cici Woolf Website App
+                                The Art of Cici Woolf
                             </h2>
                             <p className="text-white-50 md:text-xl">
                                 An app to display my artwork, built with Next.js, React.js, and Tailwind CSS.
