@@ -194,6 +194,10 @@ section {
         @apply xl:h-[37vh] md:h-52 lg:h-72 h-64 relative rounded-xl xl:px-5 2xl:px-12 py-0;
       }
 
+      .video-wrapper {
+        @apply xl:px-5 2xl:px-12 py-0;
+      }
+
       img {
         @apply w-full h-full object-contain rounded-xl;
       }

@@ -6,7 +6,7 @@ export const Button = ({ text, className, id }) => {
                 e.preventDefault()
                 const target = document.getElementById('counter')
                 if(target && id) {
-                    const offset = window.innerHeight * 0.15;
+                    const offset = window.innerHeight * 0.05;
 
                     const top = target.getBoundingClientRect().top + window.scrollY - offset;
 
