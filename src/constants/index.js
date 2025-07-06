@@ -4,7 +4,7 @@ export const words = [
 ]
 
 export const counterItems = [
-    { value: 4, suffix: "+", label: "Years of Experience" },
+    { value: 3, suffix: "+", label: "Years of Experience" },
     { value: 10, suffix: "+", label: "Projects" },
     { value: 3, suffix: "+", label: "Hackathons" }
 ]
