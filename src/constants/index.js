@@ -1,3 +1,19 @@
+export const navLinks = [
+    {
+        name: "Work",
+        link: "#work",
+    },
+    // {
+    //     name: "Experience",
+    //     link: "#experience",
+    // },
+    {
+        name: "Skills",
+        link: "#skills",
+    },
+];
+
+
 export const words = [
     { text: 'Ideas', imgPath: '/images/sparkles.svg' },
     { text: 'Creativity', imgPath: '/images/sparkles.svg' },
@@ -23,3 +39,26 @@ export const digitalWorks = [
         header: 'SpiderWeb.js',
     },
 ]
+
+export const skills = [
+    {
+        imgPath: "/images/detail.png",
+        title: "Detail-Oriented Development",
+        desc: "Brining precision and care to every project, from clean UI components to scalable backend logic.",
+    },
+    {
+        imgPath: "/images/comm.png",
+        title: "Collaborative Communication",
+        desc: "Keeping teams and stakeholders in the loop, value feedback, and speak both tech and user-friendly language.",
+    },
+    {
+        imgPath: "/images/time.png",
+        title: "Dependable Delivery",
+        desc: "Shipping thoughtful, tested features on time — even under tight timelines.",
+    },
+    {
+        imgPath: "/images/tests.png",
+        title: "Testing for Confidence",
+        desc: "Dedication to writing unit and e2e tests to ensure clean code and reliable functionality.",
+    },
+];
