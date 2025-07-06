@@ -2,11 +2,11 @@ import { skills } from "../constants";
 
 const FeatureCards = () => (
     <div className="w-full padding-x-lg ">
-        <div id="skills"className="mx-auto grid-4-cols">
+        <div id="skills"className="mx-auto grid-4-cols mb-12">
             {skills.map(({ imgPath, title, desc }) => (
                 <div
                     key={title}
-                    className="card-border rounded-xl p-8 flex flex-col gap-4 mb-12"
+                    className="card-border rounded-xl p-8 flex flex-col gap-4"
                 >
                     <div className="size-12 flex items-center justify-center rounded-full">
                         <img src={imgPath} alt={title} />
