@@ -14,6 +14,9 @@ Hi! I'm Cici Woolf, a Full Stack Developer passionate about crafting intuitive u
 
 This portfolio showcases some of my professional interests through personal projects. Explore the code, check out the live demos, and get a sense of my development style.
 
+🚀 **Live Portfolio Site:** [www.christinewoolf.com](https://www.christinewoolf.com)
+
+
 ## 🔗 Connect With Me
 
 Let's connect!
