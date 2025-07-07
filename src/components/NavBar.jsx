@@ -28,15 +28,26 @@ const NavBar = () => {
                     Cici Woolf
                 </a>
                 <nav className="desktop">
-                   <ul>
+                   <ul className="flex items-center gap-6">
                        {navLinks.map(({link, name}) => (
                            <li key={name} className="group">
-                               <a href={link}>
+                               <a href={link} className="hover:text-white transition-colors">
                                    <span>{name}</span>
                                    <span className="underline"></span>
                                </a>
                            </li>
                        ))}
+                       <li>
+                           <a 
+                               href="https://www.linkedin.com/in/christinewoolf/" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               className="flex items-center gap-1 hover:text-white transition-colors"
+                               aria-label="LinkedIn Profile"
+                           >
+                               <span>LinkedIn</span>
+                           </a>
+                       </li>
                    </ul>
                 </nav>
             </div>
