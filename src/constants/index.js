@@ -44,7 +44,7 @@ export const skills = [
     {
         imgPath: "/images/detail.png",
         title: "Detail-Oriented Development",
-        desc: "Brining precision and care to every project, from clean UI components to scalable backend logic.",
+        desc: "Bringing precision and care to every project, from clean UI components to scalable backend logic.",
     },
     {
         imgPath: "/images/comm.png",
