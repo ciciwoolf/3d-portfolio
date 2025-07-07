@@ -19,7 +19,14 @@ const NavBar = () => {
     return (
         <header className={`navbar ${scrolled ? 'scrolled' : 'not-scrolled'}`}>
             <div className="inner">
-                <a className="logo" href="#hero">Christine Woolf</a>
+                <a className="flex items-center gap-2 md:gap-4 lg:gap-6 xl:gap-8 logo" href="#hero">
+                    <img
+                        src="/images/logo.png"
+                        alt="logo"
+                        className="w-[30px] md:w-[50px] h-auto"
+                    />
+                    Cici Woolf
+                </a>
                 <nav className="desktop">
                    <ul>
                        {navLinks.map(({link, name}) => (
