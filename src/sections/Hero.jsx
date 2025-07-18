@@ -56,8 +56,8 @@ const Hero = () => {
                             <h1>that Delight and Inspire</h1>
                         </div>
 
-                        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-                            I'm Cici Woolf, a Full Stack Developer at the Science Museum of Minnesota.
+                        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none lg:max-w-[50vw]">
+                            I'm Christine Woolf, a Full Stack Developer passionate about crafting intuitive user interfaces and building beautiful, responsive software applications.
                         </p>
 
                         <Button

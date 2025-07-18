@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="w-full py-8 bg-black-100 border-t border-white-10">
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         <div className="mb-4 md:mb-0">
-          <p className="text-white-50">© {new Date().getFullYear()} Cici Woolf</p>
+          <p className="text-white-50">© {new Date().getFullYear()} C. Woolf</p>
         </div>
         <div className="flex items-center space-x-6">
           <a

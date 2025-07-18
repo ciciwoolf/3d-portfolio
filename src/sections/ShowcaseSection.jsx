@@ -63,12 +63,19 @@ const ShowcaseSection = () => {
                             </a>
                         </div>
                         <div className="text-content">
-                            <h2>
-                                Cici's Art
-                            </h2>
-                            <p className="text-white-50 md:text-xl">
-                                An app to display my artwork, built with Next.js, React.js, and Tailwind CSS.
-                            </p>
+                            <a
+                                href="https://www.theartofciciwoolf.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block"
+                            >
+                                <h2 className="hover:text-blue-50">
+                                    The Art of Cici Woolf
+                                </h2>
+                            </a>
+                                <p className="text-white-50 md:text-xl">
+                                    An app to display my artwork, built with Next.js, React.js, and Tailwind CSS.
+                                </p>
                         </div>
                     </div>
 
@@ -85,7 +92,7 @@ const ShowcaseSection = () => {
                                 >
                                     <ArtVideo publicId={publicId} cloudName={cloudName}/>
                                 </a>
-                                <h2>
+                                <h2 className="hover:text-blue-50">
                                     <a href="https://github.com/ciciwoolf/javascript-art" target="_blank"
                                        rel="noopener noreferrer"
                                        className="block">JavaScript Art</a>

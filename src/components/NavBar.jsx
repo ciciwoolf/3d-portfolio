@@ -25,7 +25,7 @@ const NavBar = () => {
                         alt="logo"
                         className="w-[30px] md:w-[50px] h-auto"
                     />
-                    Cici Woolf
+                    C. Woolf
                 </a>
                 <nav className="desktop">
                    <ul className="flex items-center gap-6">
