@@ -1,5 +1,4 @@
 import { Button } from "../components/Button.jsx";
-import { heroContent } from "../constants";
 import { HeroExperience } from "../components/HeroModels/HeroExperience.jsx";
 import AnimatedCounter from "../components/AnimatedCounter.jsx";
 import { useGSAP } from "@gsap/react";
@@ -7,7 +6,8 @@ import gsap from "gsap";
 
 const Hero = () => {
     useGSAP(() => {
-        gsap.fromTo('.hero-text h1',
+        gsap.fromTo(
+            ".hero-text h1",
             {
                 y: 50,
                 opacity: 0,
@@ -18,45 +18,42 @@ const Hero = () => {
                 stagger: 0.2,
                 ease: "power2.out",
                 duration: 1,
-            },
-        )
-    })
+            }
+        );
+    });
 
     return (
-        <section id="hero" className="relative overflow-x-hidden overflow-y-auto">
-            <div className="absolute top-0 left-0 z-10">
-            </div>
+        <section 
+            id="hero" 
+            className="relative overflow-x-hidden overflow-y-auto"
+        >
+            <div className="absolute top-0 left-0 z-10" />
 
             <div className="hero-layout">
                 {/* LEFT: Hero Content */}
-                <header className="flex flex-col justify-center md:w-full w-screen md:px-20 px-5">
+                <header className="flex flex-col justify-center w-full px-5 md:px-20">
                     <div className="flex flex-col gap-7">
                         <div className="hero-text">
                             <h1>
                                 Engineering
                                 <span className="slide">
-                                  <span className="wrapper">
-                                    {heroContent.map((word, index) => (
-                                        <span
-                                            key={index}
-                                            className="flex items-center md:gap-3 gap-1 pb-2"
-                                        >
+                                    <span className="wrapper">
+                                        <span className="flex items-center gap-1 pb-2 md:gap-3">
                                             <img
-                                                src={word.imgPath}
+                                                src="/images/sparkles.svg"
                                                 alt="sparkle"
-                                                className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full"
+                                                className="p-1 size-7 md:p-2 md:size-10 xl:size-12 rounded-full"
                                             />
-                                        <span>{word.text}</span>
-                                      </span>
-                                    ))}
-                                  </span>
-                                  </span>
+                                            <span>Ideas</span>
+                                        </span>
+                                    </span>
+                                </span>
                             </h1>
                             <h1>into Projects</h1>
                             <h1>that Delight and Inspire</h1>
                         </div>
 
-                        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none lg:max-w-[50vw]">
+                        <p className="relative z-10 text-white-50 md:text-xl pointer-events-none lg:max-w-[50vw]">
                             I'm Christine Woolf, a Full Stack Developer. I'm
                             passionate about crafting intuitive user interfaces
                             and building accessible, responsive software
@@ -64,7 +61,7 @@ const Hero = () => {
                         </p>
 
                         <Button
-                            className="md:w-80 md:h-16 w-60 h-12"
+                            className="w-60 h-12 md:w-80 md:h-16"
                             id="button"
                             text="See My Work"
                         />

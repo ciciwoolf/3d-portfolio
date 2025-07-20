@@ -9,12 +9,6 @@ export const navLinks = [
     },
 ];
 
-
-export const heroContent = [
-    { text: 'Ideas', imgPath: '/images/sparkles.svg' },
-    { text: 'Creativity', imgPath: '/images/sparkles.svg' },
-]
-
 export const counterItems = [
     { value: 3, suffix: "+", label: "Years of Experience" },
     { value: 10, suffix: "+", label: "Projects" },
