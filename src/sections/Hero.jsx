@@ -57,7 +57,10 @@ const Hero = () => {
                         </div>
 
                         <p className="text-white-50 md:text-xl relative z-10 pointer-events-none lg:max-w-[50vw]">
-                            I'm Christine Woolf, a Full Stack Developer passionate about crafting intuitive user interfaces and building beautiful, responsive software applications.
+                            I'm Christine Woolf, a Full Stack Developer. I'm
+                            passionate about crafting intuitive user interfaces
+                            and building accessible, responsive software
+                            applications.
                         </p>
 
                         <Button
