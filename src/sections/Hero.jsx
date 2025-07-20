@@ -1,5 +1,5 @@
 import { Button } from "../components/Button.jsx";
-import { words } from "../constants";
+import { heroContent } from "../constants";
 import { HeroExperience } from "../components/HeroModels/HeroExperience.jsx";
 import AnimatedCounter from "../components/AnimatedCounter.jsx";
 import { useGSAP } from "@gsap/react";
@@ -23,7 +23,7 @@ const Hero = () => {
     })
 
     return (
-        <section id="hero" className="relative overflow-hidden">
+        <section id="hero" className="relative overflow-x-hidden overflow-y-auto">
             <div className="absolute top-0 left-0 z-10">
             </div>
 
@@ -36,14 +36,14 @@ const Hero = () => {
                                 Engineering
                                 <span className="slide">
                                   <span className="wrapper">
-                                    {words.map((word, index) => (
+                                    {heroContent.map((word, index) => (
                                         <span
                                             key={index}
                                             className="flex items-center md:gap-3 gap-1 pb-2"
                                         >
                                             <img
                                                 src={word.imgPath}
-                                                alt="person"
+                                                alt="sparkle"
                                                 className="xl:size-12 md:size-10 size-7 md:p-2 p-1 rounded-full"
                                             />
                                         <span>{word.text}</span>
@@ -64,7 +64,7 @@ const Hero = () => {
                         </p>
 
                         <Button
-                            className="md:w-80 md:h-16 w60 h-12"
+                            className="md:w-80 md:h-16 w-60 h-12"
                             id="button"
                             text="See My Work"
                         />
@@ -77,7 +77,6 @@ const Hero = () => {
                         <HeroExperience />
                     </div>
                 </figure>
-
             </div>
             <AnimatedCounter />
         </section>

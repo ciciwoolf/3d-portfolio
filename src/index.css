@@ -102,6 +102,11 @@ section {
 
   .hero-3d-layout {
     @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:-right-20 right-0;
+    touch: pan-y;
+  }
+
+  .hero-3d-layout > * {
+    pointer-events: none;
   }
 
   .navbar {
@@ -363,8 +368,6 @@ section {
     transform: translateY(-87.5%);
   }
 }
-
-/* Hero Text slider ends */
 
 .gradient-line {
   width: 2px;

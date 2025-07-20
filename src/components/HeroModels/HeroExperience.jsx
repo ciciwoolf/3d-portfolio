@@ -44,7 +44,8 @@ export const HeroExperience = () => {
             style={{
                 width: '100%',
                 height: '100%',
-                display: 'block'
+                display: 'block',
+                touchAction: 'none'
             }}
         >
             <ambientLight intensity={0.2} color="#1a1a40" />

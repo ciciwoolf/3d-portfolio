@@ -3,10 +3,6 @@ export const navLinks = [
         name: "Work",
         link: "#work",
     },
-    // {
-    //     name: "Experience",
-    //     link: "#experience",
-    // },
     {
         name: "Skills",
         link: "#skills",
@@ -14,7 +10,7 @@ export const navLinks = [
 ];
 
 
-export const words = [
+export const heroContent = [
     { text: 'Ideas', imgPath: '/images/sparkles.svg' },
     { text: 'Creativity', imgPath: '/images/sparkles.svg' },
 ]
