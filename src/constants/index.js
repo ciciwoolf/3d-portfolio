@@ -1,3 +1,10 @@
+export const heroContent = {
+    heroTitleWord: "Engineering",
+    animatedWord: "Ideas",
+    heroSubtitle: "Into Seamless Digital Experiences",
+    heroIntroduction: "I'm Christine Woolf, a Full Stack Software Developer crafting intuitive user interfaces and accessible, responsive software applications.",
+}
+
 export const navLinks = [
     {
         name: "Work",

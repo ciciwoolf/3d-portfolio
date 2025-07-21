@@ -1,6 +1,7 @@
 import { Button } from "../components/Button.jsx";
 import { HeroExperience } from "../components/HeroModels/HeroExperience.jsx";
 import AnimatedCounter from "../components/AnimatedCounter.jsx";
+import { heroContent } from "../constants/index.js";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
@@ -35,7 +36,7 @@ const Hero = () => {
                     <div className="flex flex-col gap-7">
                         <div className="hero-text">
                             <h1>
-                                Engineering
+                                {heroContent.heroTitleWord}
                                 <span className="slide">
                                     <span className="wrapper">
                                         <span className="flex items-center gap-1 pb-2 md:gap-3">
@@ -44,22 +45,17 @@ const Hero = () => {
                                                 alt="sparkle"
                                                 className="p-1 size-7 md:p-2 md:size-10 xl:size-12 rounded-full"
                                             />
-                                            <span>Ideas</span>
+                                            <span>{heroContent.animatedWord}</span>
                                         </span>
                                     </span>
                                 </span>
                             </h1>
-                            <h1>into Projects</h1>
-                            <h1>that Delight and Inspire</h1>
+                            <h1>{heroContent.heroSubtitle}</h1>
                         </div>
 
-                        <p className="relative z-10 text-white-50 md:text-xl pointer-events-none lg:max-w-[50vw]">
-                            I'm Christine Woolf, a Full Stack Developer. I'm
-                            passionate about crafting intuitive user interfaces
-                            and building accessible, responsive software
-                            applications.
-                        </p>
-
+                        <div className="relative z-10 text-white-50 tracking-wide md:text-xl pointer-events-none lg:max-w-[50vw]">
+                            <p>{heroContent.heroIntroduction}</p>
+                        </div>
                         <Button
                             className="w-60 h-12 md:w-80 md:h-16"
                             id="button"
