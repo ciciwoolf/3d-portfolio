@@ -10,7 +10,7 @@ const Hero = () => {
         gsap.fromTo(
             ".hero-text h1",
             {
-                y: 50,
+                y: -50,
                 opacity: 0,
             },
             {
@@ -32,6 +32,7 @@ const Hero = () => {
 
             <div className="hero-layout">
                 {/* LEFT: Hero Content */}
+                {/* This ought to be scrollable on mobile but it isn't right now */}
                 <header className="flex flex-col justify-center w-full px-5 md:px-20">
                     <div className="flex flex-col gap-7">
                         <div className="hero-text">
