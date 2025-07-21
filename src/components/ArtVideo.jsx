@@ -18,7 +18,7 @@ const ArtVideo = ({ publicId, cloudName }) => {
     }, [cld, publicId])
 
     const poster = useMemo(() => {
-        return cld.video(publicId).format('jpg').toURL().split('?')[0]
+        return cld.image(publicId).format('jpg').toURL()
     }, [cld, publicId])
 
     return (
