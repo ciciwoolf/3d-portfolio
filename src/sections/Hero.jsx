@@ -32,7 +32,6 @@ const Hero = () => {
 
             <div className="hero-layout">
                 {/* LEFT: Hero Content */}
-                {/* This ought to be scrollable on mobile but it isn't right now */}
                 <header className="flex flex-col justify-center w-full px-5 md:px-20">
                     <div className="flex flex-col gap-7">
                         <div className="hero-text">
@@ -54,7 +53,7 @@ const Hero = () => {
                             <h1>{heroContent.heroSubtitle}</h1>
                         </div>
 
-                        <div className="relative z-10 text-white-50 tracking-wide md:text-xl pointer-events-none lg:max-w-[50vw]">
+                        <div className="relative z-10 text-white-50 tracking-wide md:text-xl lg:max-w-[50vw]">
                             <p>{heroContent.heroIntroduction}</p>
                         </div>
                         <Button

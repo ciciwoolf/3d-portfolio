@@ -54,7 +54,7 @@ export const HeroExperience = () => {
             <OrbitControls
                 enableZoom={false}
                 enablePan={false}
-                enableRotate={false}
+                enableRotate={isMobile ? false : true}
                 autoRotate={true}
                 autoRotateSpeed={0.5}
                 maxDistance={20}
@@ -64,7 +64,7 @@ export const HeroExperience = () => {
             <Suspense fallback={null}>
                 <HeroLights />
                 <group position={[0, 0, -10]}>
-                    <Particles count={isMobile ? 30 : 50} />
+                    <Particles count={isMobile ? 30 : 80} />
                 </group>
                 <RotatingGroup isMobile={isMobile}>
                     <Room />

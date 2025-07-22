@@ -6,6 +6,11 @@ const Particles = ({ count = 200 }) => {
 
     const particles = useMemo(() => {
         const temp = [];
+        // Spread particles in a wider area
+        const spread = 15; // Increased from 10 to 15 for better coverage
+        const height = 25; // Increased height range
+        const depth = 15;  // Added depth for 3D distribution
+        
         for (let i = 0; i < count; i++) {
             temp.push({
                 position: [

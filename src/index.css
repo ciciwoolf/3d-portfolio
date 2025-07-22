@@ -8,7 +8,10 @@
 
 html,
 body {
-  width: 100dvw;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   color: white;
   scroll-behavior: smooth;
@@ -84,10 +87,16 @@ section {
 
   .hero-layout {
     @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[70dvh] sm:h-[100dvh] flex xl:items-center items-start justify-center;
+    position: relative;
+    isolation: isolate;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .hero-text {
-    @apply flex flex-col justify-center md:text-[60px] text-[30px] font-semibold relative z-10 pointer-events-none;
+    @apply flex flex-col justify-center md:text-[60px] text-[30px] font-semibold relative z-10;
     img {
       @apply size-8 md:size-10 object-contain;
     }
@@ -102,7 +111,14 @@ section {
 
   .hero-3d-layout {
     @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute top-40 md:top-50 xl:-top-10 lg:right-5 xl:-right-10 right-0;
-    touch: pan-y;
+    z-index: 1;
+    touch-action: none;
+    pointer-events: none;
+  }
+  
+  /* Ensure the 3D canvas doesn't block interactions */
+  .hero-3d-layout canvas {
+    pointer-events: none !important;
   }
 
   .navbar {
