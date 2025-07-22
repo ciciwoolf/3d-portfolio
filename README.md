@@ -12,7 +12,7 @@ Hi! I'm Christine Woolf, a Full Stack Developer passionate about crafting intuit
 
 ## 📁 Projects
 
-This portfolio showcases some of my professional interests through personal projects. Explore the code, check out the live demos, and get a sense of my development style.
+This portfolio showcases some of my professional interests through personal projects. Explore the code and get a sense of my development style.
 
 🚀 **Live Portfolio Site:** [www.christinewoolf.com](https://www.christinewoolf.com)
 
