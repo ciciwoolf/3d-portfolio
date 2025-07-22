@@ -231,6 +231,18 @@ section {
 
   .cta-button {
     @apply px-4 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    
+    &:hover, &:focus-visible {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+    
+    &:active, &.active {
+      transform: scale(0.98);
+      opacity: 0.95;
+    }
 
     .bg-circle {
       @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2
