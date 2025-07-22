@@ -231,17 +231,15 @@ section {
 
   .cta-button {
     @apply px-4 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
     -webkit-tap-highlight-color: transparent;
-    
-    &:hover, &:focus-visible {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-    
+    transform: perspective(1px) translateZ(0);
+    will-change: transform;
+
     &:active, &.active {
-      transform: scale(0.98);
+      transform: perspective(1px) scale(0.96);
       opacity: 0.95;
+      transition-duration: 0.1s;
     }
 
     .bg-circle {
