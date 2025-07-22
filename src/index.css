@@ -110,7 +110,7 @@ section {
   }
 
   .hero-3d-layout {
-    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute top-40 md:top-50 xl:-top-10 lg:right-5 xl:-right-10 right-0;
+    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute top-40 md:top-35 xl:-top-5 lg:right-5 xl:-right-10 right-0;
     z-index: 1;
     touch-action: none;
     pointer-events: none;
