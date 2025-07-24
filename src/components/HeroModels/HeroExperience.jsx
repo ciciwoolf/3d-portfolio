@@ -54,7 +54,7 @@ export const HeroExperience = () => {
             <OrbitControls
                 enableZoom={false}
                 enablePan={false}
-                enableRotate={isMobile ? false : true}
+                enableRotate={!isMobile}
                 autoRotate={true}
                 autoRotateSpeed={0.5}
                 maxDistance={20}
