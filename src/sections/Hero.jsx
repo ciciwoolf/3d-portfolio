@@ -65,13 +65,14 @@ const Hero = () => {
                 </header>
 
                 {/* RIGHT: 3D Model */}
-                <figure>
+                <figure className="w-full h-full p-2 flex items-center justify-center">
                     <div className="hero-3d-layout">
-                        <HeroExperience />
+                        <HeroExperience/>
                     </div>
                 </figure>
+
             </div>
-            <AnimatedCounter />
+            <AnimatedCounter/>
         </section>
     );
 };

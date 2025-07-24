@@ -8,6 +8,7 @@
 
 html,
 body {
+  background-color: #040926;
   width: 100%;
   min-height: 100%;
   margin: 0;
@@ -86,9 +87,20 @@ section {
   }
 
   .hero-layout {
-    @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[70dvh] sm:h-[100dvh] flex xl:items-center items-start justify-center;
+    @apply relative z-10 xl:mt-20 mt-32
+    flex xl:flex-row flex-col xl:items-center items-start;
+    /* Fixed heights for mobile - no more dvh/vh */
+    height: 400px;  /* Fixed mobile height */
+
+    @media (min-width: 640px) {
+      height: 700px;  /* Slightly taller for larger phones */
+    }
+
+    @media (min-width: 768px) {
+      height: 100dvh;  /* Desktop can use dvh safely */
+    }
+
     position: relative;
-    isolation: isolate;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -96,7 +108,7 @@ section {
   }
 
   .hero-text {
-    @apply flex flex-col justify-center md:text-[60px] text-[30px] font-semibold relative z-10;
+    @apply flex flex-col justify-center md:text-[60px] text-[26px] font-semibold relative z-10;
     img {
       @apply size-8 md:size-10 object-contain;
     }
@@ -110,7 +122,8 @@ section {
   }
 
   .hero-3d-layout {
-    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute top-40 md:top-35 xl:-top-5 lg:right-5 xl:-right-10 right-0;
+    @apply w-full lg:w-[80%] xl:w-[70%] h-full absolute
+    top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-15 xl:-right-10 right-0;
     z-index: 1;
     touch-action: none;
     pointer-events: none;
@@ -230,11 +243,15 @@ section {
   }
 
   .cta-button {
-    @apply px-4 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
+    @apply px-6 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     transform: perspective(1px) translateZ(0);
     will-change: transform;
+
+    @media (max-width: 768px) {
+      @apply bg-white-50;
+    }
 
     &:active, &.active {
       transform: perspective(1px) scale(0.96);
