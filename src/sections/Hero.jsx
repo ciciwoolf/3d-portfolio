@@ -65,11 +65,17 @@ const Hero = () => {
                 </header>
 
                 {/* RIGHT: 3D Model */}
-                <figure>
-                    <div className="hero-3d-layout">
-                        <HeroExperience />
-                    </div>
-                </figure>
+                <div className="w-full h-full flex items-center justify-center"
+                     style={{
+                         touchAction: 'auto'
+                     }}
+                >
+                    <figure>
+                        <div className="hero-3d-layout">
+                            <HeroExperience />
+                        </div>
+                    </figure>
+                </div>
             </div>
             <AnimatedCounter />
         </section>

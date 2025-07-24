@@ -11,14 +11,14 @@ export const HeroLights = () => {
             <spotLight
                 position={[3, 3, 1]}
                 angle={0.15}
-                penumbra={0.25}
-                intensity={40}
+                penumbra={0.5}
+                intensity={30}
                 color={lights.mainSpotlight}
             />
             
             {/* Fill light */}
             <spotLight
-                position={[5, 5, 5]}
+                position={[4, 4, 5]}
                 angle={0.3}
                 penumbra={0.5}
                 intensity={40}
@@ -49,15 +49,15 @@ export const HeroLights = () => {
             />
             
             {/* Atmospheric point lights */}
-            <pointLight 
-                position={[0, 1, 0]} 
-                intensity={10} 
-                color={lights.pointLight1} 
+            <pointLight
+                position={[0, 1, 0]}
+                intensity={50}
+                color={lights.pointLight1}
             />
-            <pointLight 
-                position={[1, 2, -2]} 
-                intensity={10} 
-                color={lights.pointLight2} 
+            <pointLight
+                position={[1, 2, -2]}
+                intensity={30}
+                color={lights.pointLight2}
             />
         </>
     );
