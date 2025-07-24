@@ -87,8 +87,19 @@ section {
   }
 
   .hero-layout {
-    @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[70dvh] sm:h-[100dvh]
+    @apply relative z-10 xl:mt-20 mt-32
     flex xl:flex-row flex-col xl:items-center items-start;
+    /* Fixed heights for mobile - no more dvh/vh */
+    height: 400px;  /* Fixed mobile height */
+
+    @media (min-width: 640px) {
+      height: 700px;  /* Slightly taller for larger phones */
+    }
+
+    @media (min-width: 768px) {
+      height: 100dvh;  /* Desktop can use dvh safely */
+    }
+
     position: relative;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -111,8 +122,8 @@ section {
   }
 
   .hero-3d-layout {
-    @apply w-full lg:w-[80%] xl:w-[70%] h-full min-h-[50vh] absolute
-    top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-5 xl:-right-10 right-0;
+    @apply w-full lg:w-[80%] xl:w-[70%] h-full absolute
+    top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-15 xl:-right-10 right-0;
     z-index: 1;
     touch-action: none;
     pointer-events: none;
