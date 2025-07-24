@@ -65,19 +65,14 @@ const Hero = () => {
                 </header>
 
                 {/* RIGHT: 3D Model */}
-                <div className="w-full h-full flex items-center justify-center"
-                     style={{
-                         touchAction: 'auto'
-                     }}
-                >
-                    <figure>
-                        <div className="hero-3d-layout">
-                            <HeroExperience />
-                        </div>
-                    </figure>
-                </div>
+                <figure className="w-full h-full p-2 flex items-center justify-center">
+                    <div className="hero-3d-layout">
+                        <HeroExperience/>
+                    </div>
+                </figure>
+
             </div>
-            <AnimatedCounter />
+            <AnimatedCounter/>
         </section>
     );
 };

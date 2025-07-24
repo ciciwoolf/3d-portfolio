@@ -8,12 +8,13 @@
 
 html,
 body {
+  background-color: #040926;
   width: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  color:  #040926;
+  color: white;
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
 }
@@ -86,9 +87,9 @@ section {
   }
 
   .hero-layout {
-    @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[70dvh] sm:h-[100dvh] flex xl:items-center items-start justify-center;
+    @apply relative z-10 xl:mt-20 mt-32 md:h-dvh h-[70dvh] sm:h-[100dvh]
+    flex xl:flex-row flex-col xl:items-center items-start;
     position: relative;
-    isolation: isolate;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -96,7 +97,7 @@ section {
   }
 
   .hero-text {
-    @apply flex flex-col justify-center md:text-[60px] text-[30px] font-semibold relative z-10;
+    @apply flex flex-col justify-center md:text-[60px] text-[26px] font-semibold relative z-10;
     img {
       @apply size-8 md:size-10 object-contain;
     }
@@ -231,11 +232,15 @@ section {
   }
 
   .cta-button {
-    @apply px-4 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
+    @apply px-6 py-4 rounded-lg bg-blue-50 flex justify-center items-center relative cursor-pointer overflow-hidden;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     transform: perspective(1px) translateZ(0);
     will-change: transform;
+
+    @media (max-width: 768px) {
+      @apply bg-white-50;
+    }
 
     &:active, &.active {
       transform: perspective(1px) scale(0.96);
