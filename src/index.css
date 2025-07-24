@@ -13,7 +13,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  color: white;
+  color:  #040926;
   scroll-behavior: smooth;
   font-family: "Mukta", sans-serif;
 }
@@ -110,7 +110,7 @@ section {
   }
 
   .hero-3d-layout {
-    @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute
+    @apply w-full lg:w-[80%] xl:w-[70%] h-full min-h-[50vh] absolute
     top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-5 xl:-right-10 right-0;
     z-index: 1;
     touch-action: none;
