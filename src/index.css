@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --gradient: radial-gradient(circle, #e5e5e5 0%, #fff 100%);
+  --background-dark-blue: #040926;
 }
 
 html,
 body {
-  background-color: #040926;
+  background-color: var(--background-dark-blue);
   width: 100%;
   min-height: 100%;
   margin: 0;
@@ -16,7 +16,7 @@ body {
   overflow-x: hidden;
   color: white;
   scroll-behavior: smooth;
-  font-family: "Mukta", sans-serif;
+  font-family: 'Mukta', sans-serif;
 }
 
 section {
@@ -24,15 +24,15 @@ section {
 }
 
 @theme {
-  --font-sans: "Mukta", sans-serif;
-  --color-white-50: #F3EFF5; /* Magnolia - light dusky lavender */
+  --font-sans: 'Mukta', sans-serif;
+  --color-white-50: #f3eff5; /* Magnolia - light dusky lavender */
   --color-black-50: #1c1c21;
   --color-black-100: #0e0e10;
   --color-black-200: #282732;
-  --color-blue-50: #2660A4; /* Lapis Lazuli - medium */
+  --color-blue-50: #2660a4; /* Lapis Lazuli - medium */
   --color-blue-100: #040926; /* Oxford Blue - very dark */
-  --color-light-sea-green: #2EC4B6;
-  --color-red-claret: #89043D;
+  --color-light-sea-green: #2ec4b6;
+  --color-red-claret: #89043d;
 }
 
 @layer utilities {
@@ -90,14 +90,14 @@ section {
     @apply relative z-10 xl:mt-20 mt-32
     flex xl:flex-row flex-col xl:items-center items-start;
     /* Fixed heights for mobile - no more dvh/vh */
-    height: 400px;  /* Fixed mobile height */
+    height: 400px; /* Fixed mobile height */
 
     @media (min-width: 640px) {
-      height: 700px;  /* Slightly taller for larger phones */
+      height: 700px; /* Slightly taller for larger phones */
     }
 
     @media (min-width: 768px) {
-      height: 100dvh;  /* Desktop can use dvh safely */
+      height: 100dvh; /* Desktop can use dvh safely */
     }
 
     position: relative;
@@ -128,7 +128,7 @@ section {
     touch-action: none;
     pointer-events: none;
   }
-  
+
   /* Ensure the 3D canvas doesn't block interactions */
   .hero-3d-layout canvas {
     pointer-events: none !important;
@@ -253,7 +253,8 @@ section {
       @apply bg-white-50;
     }
 
-    &:active, &.active {
+    &:active,
+    &.active {
       transform: perspective(1px) scale(0.96);
       opacity: 0.95;
       transition-duration: 0.1s;
@@ -382,13 +383,16 @@ section {
 }
 
 @keyframes wordSlider {
-  0%, 30% {
+  0%,
+  30% {
     transform: translateY(0);
   }
-  40%, 60% {
+  40%,
+  60% {
     transform: translateY(-80%);
   }
-  70%, 100% {
+  70%,
+  100% {
     transform: translateY(0);
   }
 }
@@ -396,12 +400,12 @@ section {
 .gradient-line {
   width: 2px;
   background: linear-gradient(
-          0deg,
-          rgba(69, 222, 196, 0) 0%,
-          #62e0ff 25%,
-          #52aeff 37.51%,
-          #fd5c79 62.83%,
-          #6d45ce 92.91%
+    0deg,
+    rgba(69, 222, 196, 0) 0%,
+    #62e0ff 25%,
+    #52aeff 37.51%,
+    #fd5c79 62.83%,
+    #6d45ce 92.91%
   );
 }
 
@@ -409,17 +413,17 @@ section {
   left: 0;
   background: rgb(0, 0, 0);
   background: linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(255, 255, 255, 0) 100%
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
 }
 .gradient-edge:nth-of-type(2) {
   right: 0;
   background: linear-gradient(
-          -90deg,
-          rgba(0, 0, 0, 1) 0%,
-          rgba(255, 255, 255, 0) 100%
+    -90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
 }
 
@@ -433,7 +437,7 @@ section {
 
 .card::before {
   position: absolute;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   left: 50%;
@@ -444,12 +448,12 @@ section {
   background: var(--gradient);
   background-attachment: fixed;
   mask: linear-gradient(#0000, #0000),
-  conic-gradient(
-          from calc((var(--start) - 15) * 1deg),
-          #ffffff1f 0deg,
-          white,
-          #ffffff00 100deg
-  );
+    conic-gradient(
+      from calc((var(--start) - 15) * 1deg),
+      #ffffff1f 0deg,
+      white,
+      #ffffff00 100deg
+    );
   mask-composite: intersect;
   mask-clip: padding-box, border-box;
   opacity: 0;
