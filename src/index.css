@@ -28,11 +28,15 @@ section {
   --color-white-50: #f3eff5; /* Magnolia - light dusky lavender */
   --color-black-50: #1c1c21;
   --color-black-100: #0e0e10;
-  --color-black-200: #282732;
-  --color-blue-50: #2660a4; /* Lapis Lazuli - medium */
+  --color-black-200: #292833;
+  --color-blue-50: #2660a3; /* Lapis Lazuli - medium */
   --color-blue-100: #040926; /* Oxford Blue - very dark */
-  --color-light-sea-green: #2ec4b6;
-  --color-red-claret: #89043d;
+  --color-blue-200: #055996;
+  --color-blue-300: #055996;
+  --color-purple-100: #561afa; /* light blue purple */
+  --color-purple-200: #2a0d7b; /* dark blue purple */
+  --color-red: #89043d;
+  --color-orange: #f7723e;
 }
 
 @layer utilities {
