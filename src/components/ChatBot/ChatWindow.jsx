@@ -76,7 +76,7 @@ const ChatWindow = ({ onClose }) => {
   };
 
   return (
-    <div className="w-[85vw] sm:w-80 lg:w-96 h-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col overflow-hidden">
+    <div className="w-[85vw] sm:w-80 lg:w-96 h-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col overflow-hidden max-w-[85vw]">
       {/* HEADER: Chat title and close button */}
       <div className="bg-gradient-to-r from-purple-100 to-purple-200 text-white p-4 flex items-center justify-between">
         <div>

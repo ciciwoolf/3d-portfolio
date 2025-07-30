@@ -44,11 +44,14 @@ const ChatInput = ({ onSendMessage }) => {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
           placeholder="Ask about Christine's work..."
-          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm 
+          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-base 
                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           maxLength={500} // Prevent extremely long messages
+          autoComplete="off"
+          autoCapitalize="sentences"
+          autoCorrect="on"
         />
 
         {/* SEND BUTTON */}
