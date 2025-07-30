@@ -81,7 +81,7 @@ const ChatWindow = ({ onClose }) => {
       <div className="bg-gradient-to-r from-purple-100 to-purple-200 text-white p-4 flex items-center justify-between">
         <div>
           <h3 className="font-semibold">Christine's AI Assistant</h3>
-          <p className="text-xs opacity-90">Ask me anything!</p>
+          <p>...training in progress...</p>
         </div>
         <button
           onClick={onClose}
