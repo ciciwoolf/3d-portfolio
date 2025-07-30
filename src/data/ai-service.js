@@ -15,7 +15,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/distilgpt2'; // Lightweight model for testing
+    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
   }
 
   /**
@@ -61,6 +61,9 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    * @returns {Promise<string>} - AI generated response
    */
   async generateResponse(userQuestion) {
+    // TEMPORARY: Force fallback for testing
+    // return this.getFallbackResponse(userQuestion);
+
     try {
       // Initialize model if not loaded
       const generator = await this.initializeModel();
@@ -121,21 +124,42 @@ Answer as Christine's assistant (keep it concise and helpful):`;
   getFallbackResponse(userQuestion) {
     const question = userQuestion.toLowerCase();
 
+    // Education-related questions
+    if (
+      question.includes('school') ||
+      question.includes('education') ||
+      question.includes('study') ||
+      question.includes('college') ||
+      question.includes('university')
+    ) {
+      return "Christine has a diverse educational background! She studied Philosophy, German, and Spanish at Concordia College, completed her senior year in Germany, earned a Master's in Religious History at Luther Seminary, and transitioned to web development through a bootcamp at Digitalhouse in Buenos Aires.";
+    }
+
+    // Experience-related questions
+    if (
+      question.includes('experience') ||
+      question.includes('job') ||
+      question.includes('work') ||
+      question.includes('company')
+    ) {
+      return 'Christine has great experience as a Full Stack Developer! She spent 2.5 years at TSI building IoT data platforms, worked at the Science Museum of Minnesota on interactive applications, and contributed to e-commerce analytics at Best Buy. She specializes in Vue.js, React, Node.js, and GoLang.';
+    }
+
     // Simple keyword-based responses
     if (question.includes('skill') || question.includes('tech')) {
       return "Christine specializes in React, Vue.js, Node.js, and modern web development. She's passionate about creating accessible, responsive web applications!";
     }
 
-    if (question.includes('project') || question.includes('work')) {
+    if (question.includes('project')) {
       return 'Christine has built impressive projects including her 3D interactive portfolio using React, Three.js, and modern web technologies. Check out her work at christinewoolf.com!';
     }
 
     if (question.includes('contact') || question.includes('reach')) {
-      return 'You can connect with Christine on LinkedIn at https://www.linkedin.com/in/christinewoolf/ or visit her portfolio at christinewoolf.com Woolf!';
+      return 'You can connect with Christine on LinkedIn at https://www.linkedin.com/in/christinewoolf/ or visit her portfolio at christinewoolf.com!';
     }
 
     // Default response
-    return "I'm Christine's AI assistant! I can tell you about her skills in React, Vue.js, Node.js, her projects, and professional experience. What would you like to know?";
+    return "I'm Christine's AI assistant, just beginning to learn. Ask me about her skills, school, or professional experience!";
   }
 
   /**
