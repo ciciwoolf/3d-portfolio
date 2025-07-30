@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import ChatInput from './ChatInput';
+import aiService from '../../data/ai-service.js';
 
 /**
  * ChatWindow - The main chat interface
@@ -57,19 +58,25 @@ const ChatWindow = ({ onClose }) => {
     // 2. Show typing indicator
     setIsTyping(true);
 
-    // 3. TODO: AI response will go here in next step
-    // For now, just a placeholder response
-    setTimeout(() => {
+    try {
+      // 3. Generate AI response using our AI service
+      const aiResponse = await aiService.generateResponse(userMessage);
+
+      // 4. Hide typing indicator and show AI response
+      setIsTyping(false);
+      addMessage(aiResponse, true);
+    } catch (error) {
+      console.error('Error generating AI response:', error);
       setIsTyping(false);
       addMessage(
-        "Thanks for your message! I'm still learning. In the next step, we'll connect me to an AI model!",
+        "I'm having trouble responding right now. Please try asking about Christine's skills, projects, or experience!",
         true
       );
-    }, 1500);
+    }
   };
 
   return (
-    <div className="w-80 h-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col overflow-hidden">
+    <div className="w-[85vw] md:w-80 lg:w-96 h-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col overflow-hidden">
       {/* HEADER: Chat title and close button */}
       <div className="bg-gradient-to-r from-purple-100 to-purple-200 text-white p-4 flex items-center justify-between">
         <div>
@@ -86,7 +93,7 @@ const ChatWindow = ({ onClose }) => {
       </div>
 
       {/* MESSAGES AREA: Scrollable message history */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-3 bg-gray-50">
         {/* Render all messages using MessageBubble component */}
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
