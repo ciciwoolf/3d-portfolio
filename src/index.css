@@ -134,6 +134,11 @@ section {
     top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-15 xl:-right-10 right-0;
     z-index: 1;
 
+    /* Move down 15px on mobile only */
+    @media (max-width: 425px) {
+      transform: translateY(12px);
+    }
+
     /* Allow touch scrolling to pass through on mobile */
     pointer-events: auto;
 
