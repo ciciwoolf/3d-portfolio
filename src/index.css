@@ -105,10 +105,14 @@ section {
     }
 
     position: relative;
+    /* Enable touch scrolling on mobile, disable text selection */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    /* Allow vertical scrolling but prevent horizontal pan */
+    touch-action: pan-y pinch-zoom;
   }
 
   .hero-text {
@@ -129,13 +133,44 @@ section {
     @apply w-full lg:w-[80%] xl:w-[70%] h-full absolute
     top-40 md:top-35 lg:-top-8 lg:-right-8 xl:-top-15 xl:-right-10 right-0;
     z-index: 1;
-    touch-action: none;
-    pointer-events: none;
+
+    /* Move down 15px on mobile only */
+    @media (max-width: 425px) {
+      transform: translateY(12px);
+    }
+
+    /* Allow touch scrolling to pass through on mobile */
+    pointer-events: auto;
+
+    /* Only disable touch interactions on desktop to prevent 3D interference */
+    @media (min-width: 768px) {
+      pointer-events: none;
+    }
   }
 
-  /* Ensure the 3D canvas doesn't block interactions */
+  /* Ensure the 3D canvas allows scrolling on mobile but prevents interactions on desktop */
   .hero-3d-layout canvas {
+    /* Disable touch events on mobile so overlay can handle scrolling */
     pointer-events: none !important;
+
+    /* On desktop, also disable to prevent interference */
+    @media (min-width: 768px) {
+      pointer-events: none !important;
+    }
+  }
+
+  /* Mobile-only invisible overlay to enable scrolling over 3D canvas */
+  .mobile-scroll-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: auto;
+    touch-action: pan-y;
+    background: transparent;
+    /* Invisible but captures touch events for scrolling */
   }
 
   .navbar {
