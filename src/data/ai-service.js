@@ -15,7 +15,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/Phi-3-mini-4k-instruct';
+    this.modelName = 'Xenova/gpt2';
   }
 
   /**
