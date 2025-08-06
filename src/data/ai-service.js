@@ -1,6 +1,6 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-
+window.backgroundAPI = backgroundAPI;
 /**
  * AI Service - Simplified with better fallback integration
  */
@@ -52,6 +52,23 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    * Generate response with AI model or fallback
    */
   async generateResponse(userQuestion) {
+    console.log('🤖 Generating response for:', userQuestion);
+
+    // For now, prioritize fallback responses for reliability
+    // You can enable AI by setting this to false
+    const useFallbackFirst = true;
+
+    if (useFallbackFirst) {
+      const fallbackResponse = this.getFallbackResponse(userQuestion);
+      if (
+        fallbackResponse &&
+        !fallbackResponse.includes("I'm Christine's AI assistant!")
+      ) {
+        console.log('✅ Using targeted fallback response');
+        return fallbackResponse;
+      }
+    }
+
     try {
       const generator = await this.initializeModel();
 
@@ -64,24 +81,27 @@ Answer as Christine's assistant (keep it concise and helpful):`;
       console.log('Using prompt preview:', prompt.substring(0, 150) + '...');
 
       const result = await generator(prompt, {
-        max_length: 150,
-        temperature: 0.7,
+        max_length: 120, // Shorter responses
+        temperature: 0.5, // Less random
         do_sample: true,
-        top_p: 0.9,
+        top_p: 0.8,
         pad_token_id: 50256,
       });
 
       let response = result[0].generated_text.replace(prompt, '').trim();
       response = this.cleanResponse(response);
 
-      if (!response || response.length < 10) {
-        console.log('AI response too short, using fallback');
+      if (
+        !response ||
+        response.length < 10 ||
+        (response.includes('Christine Woolf') && response.length < 50)
+      ) {
+        console.log('AI response inadequate, using fallback');
         return this.getFallbackResponse(userQuestion);
       }
 
       console.log('AI response generated successfully');
       return response;
-      
     } catch (error) {
       console.error('AI generation error:', error);
       return this.getFallbackResponse(userQuestion);
@@ -105,36 +125,93 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    */
   getFallbackResponse(userQuestion) {
     console.log('🔄 Using fallback response for:', userQuestion);
-    
+
     const question = userQuestion.toLowerCase();
 
-    // Use the same keyword detection as backgroundAPI
-    if (question.includes('skill') || question.includes('tech') || question.includes('programming')) {
-      return "Christine specializes in React, Vue.js, Node.js, TypeScript, and modern web development. She has extensive experience with IoT data platforms, 3D web graphics using Three.js, and building accessible, responsive applications!";
+    // Education questions - very specific matching
+    if (
+      question.includes('education') ||
+      question.includes('study') ||
+      question.includes('school') ||
+      question.includes('college') ||
+      question.includes('university') ||
+      question.includes('degree') ||
+      question.includes('learn') ||
+      question.includes('graduate')
+    ) {
+      return "Christine has a diverse educational background! She completed a triple major in Philosophy, German, and Spanish at Concordia College, spent her senior year studying in Germany at Friedrich Schiller Universität, earned a Master's in Religious History at Luther Seminary, and later transitioned to web development through a bootcamp at Digitalhouse in Buenos Aires.";
     }
 
-    if (question.includes('education') || question.includes('study') || question.includes('school') || question.includes('college')) {
-      return "Christine has a fascinating educational journey! She studied Philosophy, German, and Spanish at Concordia College, completed her senior year in Germany, earned a Master's in Religious History, and transitioned to web development through a bootcamp in Buenos Aires.";
+    // Experience/work questions
+    if (
+      question.includes('experience') ||
+      question.includes('job') ||
+      question.includes('career') ||
+      question.includes('work') ||
+      question.includes('company') ||
+      question.includes('role')
+    ) {
+      return 'Christine has 3+ years of professional development experience! She spent 2.5 years at TSI Incorporated building IoT data platforms for environmental monitoring, worked on interactive applications with React and Three.js at the Science Museum of Minnesota, and contributed to e-commerce analytics and tag management systems at Best Buy.';
     }
 
-    if (question.includes('project') || question.includes('work') || question.includes('portfolio')) {
-      return "Christine has built impressive projects including her 3D interactive portfolio using React and Three.js, IoT data platforms for environmental monitoring, and interactive museum applications. Check out her work at christinewoolf.com!";
+    // Skills/tech questions
+    if (
+      question.includes('skill') ||
+      question.includes('tech') ||
+      question.includes('programming') ||
+      question.includes('language') ||
+      question.includes('framework') ||
+      question.includes('tool')
+    ) {
+      return "Christine specializes in React, Vue.js, Node.js, TypeScript, JavaScript, and GoLang. She has extensive experience with IoT data platforms, 3D web graphics using Three.js, GraphQL APIs, and building accessible, responsive applications. She's passionate about creating intuitive user interfaces!";
     }
 
-    if (question.includes('experience') || question.includes('job') || question.includes('career')) {
-      return "Christine has 3+ years of full-stack development experience! She spent 2.5 years at TSI building IoT data platforms, worked on interactive applications at the Science Museum of Minnesota, and contributed to e-commerce analytics at Best Buy.";
+    // Project questions
+    if (
+      question.includes('project') ||
+      question.includes('portfolio') ||
+      question.includes('build') ||
+      question.includes('made') ||
+      question.includes('created')
+    ) {
+      return 'Christine has built impressive projects including this 3D interactive portfolio using React and Three.js, IoT data platforms for environmental monitoring, interactive museum applications, and e-commerce analytics systems. Check out her work at christinewoolf.com!';
     }
 
-    if (question.includes('name') || question.includes('woolf')) {
-      return "Her full name is Christine Woolf - last name Woolf. She's a Full Stack Developer passionate about creating amazing web experiences!";
+    // Contact questions
+    if (
+      question.includes('contact') ||
+      question.includes('reach') ||
+      question.includes('connect') ||
+      question.includes('email') ||
+      question.includes('linkedin')
+    ) {
+      return 'You can connect with Christine on LinkedIn at https://www.linkedin.com/in/christinewoolf/ or visit her portfolio at christinewoolf.com to see her work and get in touch!';
     }
 
-    if (question.includes('contact') || question.includes('reach') || question.includes('connect')) {
-      return "You can connect with Christine on LinkedIn at https://www.linkedin.com/in/christinewoolf/ or visit her portfolio at christinewoolf.com to see her work and get in touch!";
+    // Name questions
+    if (
+      question.includes('name') ||
+      question.includes('woolf') ||
+      question.includes('christine') ||
+      question.includes('cici')
+    ) {
+      return "Her full name is Christine Woolf - she also goes by Cici. She's a Full Stack Developer passionate about creating amazing web experiences with modern technologies!";
+    }
+
+    // Location/origin questions
+    if (
+      question.includes('where') ||
+      question.includes('from') ||
+      question.includes('location') ||
+      question.includes('live') ||
+      question.includes('based') ||
+      question.includes('located')
+    ) {
+      return 'Christine is based in the United States! She has an international background though - she studied in Germany during college and completed a web development bootcamp in Buenos Aires, Argentina. This global experience gives her a unique perspective on creating inclusive, accessible web applications.';
     }
 
     // Default response
-    return "I'm Christine's AI assistant! I can tell you about her skills in React, Vue.js, and Node.js, her educational background, professional projects, or how to get in touch. What would you like to know?";
+    return "I'm Christine's AI assistant! I can tell you about her skills in React, Vue.js, and Node.js, her diverse educational background, professional experience at companies like TSI and the Science Museum, or how to get in touch. What would you like to know?";
   }
 
   /**
