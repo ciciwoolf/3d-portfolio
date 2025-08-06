@@ -37,13 +37,13 @@ class AIService {
   createPersonalizedPrompt(userQuestion) {
     const context = backgroundAPI.getContextForAI(userQuestion);
 
-    const prompt = `I am Christine Woolf's AI assistant. I help people learn about Christine's background and experience.
-
-${context}
+    // Even simpler - just facts and direct Q&A
+    const prompt = `Christine Woolf is a Full Stack Developer. ${context
+      .replace(/About Christine Woolf:/g, '')
+      .trim()}
 
 Question: ${userQuestion}
-
-Response:`;
+Answer: Christine`;
 
     return prompt;
   }
@@ -91,8 +91,15 @@ Response:`;
       let response = result[0].generated_text.replace(prompt, '').trim();
       response = this.cleanResponse(response);
 
-      if (!response || response.length < 5) {
-        console.log('AI response too short, using fallback');
+      // Check for common GPT-2 failures
+      if (
+        !response ||
+        response.length < 5 ||
+        response.toLowerCase().includes('please answer') ||
+        response.toLowerCase().includes('below') ||
+        (response.toLowerCase().includes('question') && response.length < 20)
+      ) {
+        console.log('AI response inadequate, using fallback:', response);
         return this.getFallbackResponse(userQuestion);
       }
 
@@ -109,11 +116,14 @@ Response:`;
    */
   cleanResponse(response) {
     return response
-      .split('\n')[0]
-      .replace(/^(Answer:|Response:)/i, '')
+      .split('\n')[0] // Take first line only
+      .replace(/^(Answer:|Response:|A:|Q:)/i, '') // Remove common prefixes
+      .replace(/Please answer.*$/i, '') // Remove "Please answer" artifacts
+      .replace(/below[!.]*/i, '') // Remove "below" artifacts
       .trim()
-      .replace(/[.]{2,}/g, '.')
-      .substring(0, 200);
+      .replace(/[.]{2,}/g, '.') // Fix multiple periods
+      .replace(/^\W+/, '') // Remove leading non-word characters
+      .substring(0, 150); // Shorter limit for cleaner responses
   }
 
   /**
