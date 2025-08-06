@@ -15,8 +15,6 @@ const App = () => {
         <FeaturedCards />
       </main>
       <Footer />
-
-      {/* AI Chat Widget */}
       <ChatWidget />
     </div>
   );

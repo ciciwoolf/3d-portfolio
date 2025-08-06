@@ -2,11 +2,15 @@
 export const Button = ({ text, className, id }) => {
     const handleClick = (e) => {
         e.preventDefault();
-        // Add touch feedback
-        e.currentTarget.classList.add('active');
-        setTimeout(() => {
-            e.currentTarget.classList.remove('active');
-        }, 200);
+        // Add touch feedback with null check
+        if (e.currentTarget) {
+            e.currentTarget.classList.add('active');
+            setTimeout(() => {
+                if (e.currentTarget) {
+                    e.currentTarget.classList.remove('active');
+                }
+            }, 200);
+        }
 
         const target = document.getElementById('counter');
         if (target && id) {
@@ -22,8 +26,8 @@ export const Button = ({ text, className, id }) => {
     return (
         <a
             onClick={handleClick}
-            onTouchStart={(e) => e.currentTarget.classList.add('active')}
-            onTouchEnd={(e) => e.currentTarget.classList.remove('active')}
+            onTouchStart={(e) => e.currentTarget?.classList.add('active')}
+            onTouchEnd={(e) => e.currentTarget?.classList.remove('active')}
             className={`${className ?? ''} cta-wrapper`}
         >
             <div className="cta-button group">
