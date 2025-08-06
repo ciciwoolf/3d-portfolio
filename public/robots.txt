@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://christinewoolf.com/sitemap.xml
+
+# Disallow certain paths if needed
+Disallow: /api/
+Disallow: *.json$
