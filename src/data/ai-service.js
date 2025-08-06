@@ -1,6 +1,5 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-window.backgroundAPI = backgroundAPI;
 /**
  * AI Service - Simplified with better fallback integration
  */

@@ -8,7 +8,7 @@
     "communication_style": "clear, helpful, detail-oriented",
     "interests": [
       "Web Development",
-      "UI/UX Design", 
+      "UI/UX Design",
       "3D Graphics",
       "Problem Solving",
       "Accessibility",
@@ -19,7 +19,7 @@
     "languages": ["English", "Spanish"],
     "education": {
       "undergraduate": "Triple major in Philosophy, German, and Spanish with minor in Classical Studies at Concordia College",
-      "graduate": "Master's in Religious History at Luther Seminary", 
+      "graduate": "Master's in Religious History at Luther Seminary",
       "international": "Senior year at Friedrich Schiller Universität in Jena, Germany",
       "bootcamp": "Web Development at Digitalhouse (completed in Spanish while in Buenos Aires)"
     }
@@ -27,13 +27,26 @@
 
   "skills": {
     "frontend": {
-      "frameworks": ["React", "Vue3", "Vue.js", "Next.js with App Router", "Gatsby.js"],
+      "frameworks": [
+        "React",
+        "Vue3",
+        "Vue.js",
+        "Next.js with App Router",
+        "Gatsby.js"
+      ],
       "languages": ["JavaScript", "TypeScript", "HTML5", "CSS3"],
-      "styling": ["Tailwind CSS", "SCSS", "CSS Grid", "Flexbox", "Material UI", "Vuetify"],
+      "styling": [
+        "Tailwind CSS",
+        "SCSS",
+        "CSS Grid",
+        "Flexbox",
+        "Material UI",
+        "Vuetify"
+      ],
       "libraries": ["Three.js", "GSAP", "React Three Fiber"],
       "advanced_patterns": [
         "Custom hooks",
-        "Context providers", 
+        "Context providers",
         "Performance optimization with useMemo/useCallback",
         "Component composition",
         "State management across user workflows"
@@ -44,7 +57,11 @@
       "apis": ["GraphQL", "REST APIs"],
       "databases": ["MongoDB", "Firestore"],
       "tools": ["Express.js"],
-      "specialties": ["Microservices architecture", "IoT data processing", "Subscription management systems"]
+      "specialties": [
+        "Microservices architecture",
+        "IoT data processing",
+        "Subscription management systems"
+      ]
     },
     "tools": {
       "development": ["Vite", "Git", "VS Code", "Docker", "Jenkins"],
@@ -53,9 +70,23 @@
       "testing": ["Jest", "Cypress", "Unit testing", "End-to-end testing"]
     },
     "architecture": {
-      "principles": ["Scalability", "Maintainability", "Reliability", "Performance", "Accessibility"],
-      "patterns": ["Microservices", "Component reusability", "Separation of concerns"],
-      "experience": ["Multi-environment deployment", "CI/CD processes", "Cross-browser compatibility"]
+      "principles": [
+        "Scalability",
+        "Maintainability",
+        "Reliability",
+        "Performance",
+        "Accessibility"
+      ],
+      "patterns": [
+        "Microservices",
+        "Component reusability",
+        "Separation of concerns"
+      ],
+      "experience": [
+        "Multi-environment deployment",
+        "CI/CD processes",
+        "Cross-browser compatibility"
+      ]
     }
   },
 
@@ -69,12 +100,22 @@
       "key_projects": [
         "Built subscription API for device data access",
         "Developed microservices architecture using GoLang APIs",
-        "Created Vue.js application integrated with Microsoft Excel", 
+        "Created Vue.js application integrated with Microsoft Excel",
         "Managed complete pipeline from IoT device data collection to end-user analysis",
         "Contributed significantly to Vue 2 to Vue 3 migration for customer website platform",
         "Developed custom endpoints using MongoDB aggregation pipelines for finance team"
       ],
-      "technologies": ["Vue.js (2 & 3)", "GoLang", "Node.js", "MongoDB", "Firestore", "Google Cloud", "TypeScript", "Jest", "Cypress"],
+      "technologies": [
+        "Vue.js (2 & 3)",
+        "GoLang",
+        "Node.js",
+        "MongoDB",
+        "Firestore",
+        "Google Cloud",
+        "TypeScript",
+        "Jest",
+        "Cypress"
+      ],
       "achievements": [
         "Became sole maintainer of legacy Cordova mobile application for noise dosimeters",
         "Mentored junior software engineer on Vue.js application development and API design",
@@ -82,16 +123,21 @@
       ]
     },
     {
-      "company": "Science Museum of Minnesota", 
+      "company": "Science Museum of Minnesota",
       "role": "Full Stack Developer",
       "type": "Interactive Museum Applications",
-      "description": "Led development of interactive map-based interfaces displaying hundreds of science videos across multiple device types including museum kiosks",
+      "description": "Led development of interactive map-based interfaces displaying hundreds of science videos",
       "technologies": ["React", "Next.js", "Gatsby.js", "GraphQL", "Three.js"],
-      "focus": ["Accessibility compliance", "Multi-device compatibility", "Performance optimization", "Public-facing interfaces"]
+      "focus": [
+        "Accessibility compliance",
+        "Multi-device compatibility",
+        "Performance optimization",
+        "Public-facing interfaces"
+      ]
     },
     {
       "company": "Best Buy",
-      "role": "Developer", 
+      "role": "Developer",
       "type": "E-commerce Analytics",
       "description": "Contributed to tag management systems and API development for Digital Analytics Implementation team",
       "technologies": ["JavaScript", "Node.js"],
@@ -107,7 +153,7 @@
       "technologies": ["React", "Three.js", "Vite", "Tailwind CSS", "GSAP"],
       "features": [
         "Interactive 3D room environment",
-        "Smooth scroll animations", 
+        "Smooth scroll animations",
         "Responsive design",
         "Performance optimized",
         "Modern UI components"
@@ -125,10 +171,15 @@
       "id": "ai-chatbot",
       "name": "Portfolio AI Chatbot",
       "description": "Browser-based AI chatbot using Transformers.js and RAG architecture to answer questions about my professional background",
-      "technologies": ["JavaScript", "Transformers.js", "RAG (Retrieval-Augmented Generation)", "Browser-based AI"],
+      "technologies": [
+        "JavaScript",
+        "Transformers.js",
+        "RAG (Retrieval-Augmented Generation)",
+        "Browser-based AI"
+      ],
       "features": [
         "Client-side inference with no backend required",
-        "Knowledge base integration", 
+        "background base integration",
         "Fallback response system",
         "Prompt engineering with personalized context"
       ],
@@ -139,17 +190,33 @@
   "technical_specialties": {
     "iot_systems": {
       "experience": "2.5 years building IoT data platforms at TSI",
-      "technologies": ["Google Cloud", "Real-time data processing", "Device data integrity"],
-      "applications": ["Air quality monitoring", "Environmental data collection", "Scientific instrumentation"]
+      "technologies": [
+        "Google Cloud",
+        "Real-time data processing",
+        "Device data integrity"
+      ],
+      "applications": [
+        "Air quality monitoring",
+        "Environmental data collection",
+        "Scientific instrumentation"
+      ]
     },
     "ai_integration": {
       "current_work": "Implementing browser-based AI chatbot with Transformers.js",
-      "interests": ["AI agents", "MLOps workflows", "Autonomous development systems"],
+      "interests": [
+        "AI agents",
+        "MLOps workflows",
+        "Autonomous development systems"
+      ],
       "experience": "Extensive use of AI agents in personal frontend projects"
     },
     "accessibility": {
       "focus": "WCAG compliance for public-facing applications",
-      "experience": ["Museum kiosks", "Multi-device interfaces", "Cross-browser compatibility"],
+      "experience": [
+        "Museum kiosks",
+        "Multi-device interfaces",
+        "Cross-browser compatibility"
+      ],
       "principles": "Ensuring equal access across different device types and user capabilities"
     }
   },
@@ -178,12 +245,23 @@
     {
       "question": "What's your development approach?",
       "answer": "I believe in writing clean, maintainable code with a focus on user experience and accessibility. I prioritize scalable architecture, comprehensive testing strategies, and collaborative development. My experience spans from IoT systems requiring high reliability to public-facing applications needing optimal performance across diverse environments.",
-      "keywords": ["approach", "methodology", "philosophy", "development process"]
+      "keywords": [
+        "approach",
+        "methodology",
+        "philosophy",
+        "development process"
+      ]
     },
     {
       "question": "What's your background before programming?",
       "answer": "I have a diverse background in languages, philosophy, and music. I studied in Germany, conducted research in Guatemala, and taught ESL while traveling through Central and South America. This international experience and multilingual background brings unique perspectives to my development work, especially in building accessible, global applications.",
-      "keywords": ["background", "education", "languages", "international", "music"]
+      "keywords": [
+        "background",
+        "education",
+        "languages",
+        "international",
+        "music"
+      ]
     }
   ],
 
@@ -194,7 +272,7 @@
     "values": "clean code, user experience, accessibility, continuous learning, open source collaboration",
     "unique_strengths": [
       "Multilingual communication skills",
-      "Cross-cultural collaboration experience", 
+      "Cross-cultural collaboration experience",
       "Systematic thinking from philosophy background",
       "Teaching and mentoring abilities",
       "International perspective on user experience"
@@ -206,13 +284,12 @@
       "Sole maintainer of legacy Cordova mobile application at TSI",
       "Played a key role in successful Vue 2 to Vue 3 migration",
       "Built production IoT data platform serving scientific community",
-      "Optimized 3D web performance for mobile devices",
       "Implemented comprehensive testing strategies for microservices"
     ],
     "leadership": [
       "Mentored junior software engineer",
       "Participated in sprint planning with offshore teams",
-      "Advocated for open source adoption in development stack"
+      "Presented on various topics of web development during company techshares"
     ],
     "academic": [
       "Conducted independent research in Guatemala",
