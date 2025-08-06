@@ -1,5 +1,5 @@
 import { pipeline } from '@xenova/transformers';
-import backgroundAPI from './background-api.js';
+import knowledgeAPI from './knowledge-api.js';
 
 /**
  * AI Service - Handles AI model interaction and response generation
@@ -15,7 +15,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/gpt2';
+    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
   }
 
   /**
@@ -36,13 +36,13 @@ class AIService {
   }
 
   /**
-   * Create a personalized prompt using Christine's background
+   * Create a personalized prompt using Christine's knowledge
    * @param {string} userQuestion - The user's question
    * @returns {string} - Formatted prompt for the AI
    */
   createPersonalizedPrompt(userQuestion) {
-    // Get relevant context from background base
-    const context = backgroundAPI.getContextForAI(userQuestion);
+    // Get relevant context from knowledge base
+    const context = knowledgeAPI.getContextForAI(userQuestion);
 
     const prompt = `You are Christine Woolf's helpful AI assistant. Answer questions about Christine professionally and enthusiastically.
 
@@ -61,6 +61,9 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    * @returns {Promise<string>} - AI generated response
    */
   async generateResponse(userQuestion) {
+    // TEMPORARY: Force fallback for testing
+    // return this.getFallbackResponse(userQuestion);
+
     try {
       // Initialize model if not loaded
       const generator = await this.initializeModel();
