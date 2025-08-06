@@ -1,0 +1,24 @@
+{
+  "name": "Christine Woolf - Full Stack Developer Portfolio",
+  "short_name": "Christine Woolf",
+  "description": "Full Stack Developer specializing in React, Vue.js, Node.js, and modern web applications",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#040926",
+  "theme_color": "#040926",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
