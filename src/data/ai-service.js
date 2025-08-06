@@ -15,7 +15,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
+    this.modelName = 'Xenova/gpt2';
   }
 
   /**
@@ -61,9 +61,6 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    * @returns {Promise<string>} - AI generated response
    */
   async generateResponse(userQuestion) {
-    // TEMPORARY: Force fallback for testing
-    // return this.getFallbackResponse(userQuestion);
-
     try {
       // Initialize model if not loaded
       const generator = await this.initializeModel();
