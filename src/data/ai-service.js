@@ -55,7 +55,7 @@ Answer: Christine`;
     console.log('🤖 Generating response for:', userQuestion);
 
     // Set to false to use background API + AI model instead of hardcoded fallbacks
-    const useFallbackFirst = false; // Changed to false to enable AI!
+    const useFallbackFirst = true; // Changed to false to enable AI!
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
