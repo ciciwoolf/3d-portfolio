@@ -54,18 +54,13 @@ Answer: Christine`;
   async generateResponse(userQuestion) {
     console.log('🤖 Generating response for:', userQuestion);
 
-    // Set to false to use background API + AI model instead of hardcoded fallbacks
-    const useFallbackFirst = true; // Changed to false to enable AI!
+    // Set to true to use reliable fallback responses instead of AI model
+    const useFallbackFirst = true; // Using fallbacks for now - AI model giving weird responses
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
-      if (
-        fallbackResponse &&
-        !fallbackResponse.includes("I'm Christine's AI assistant!")
-      ) {
-        console.log('✅Using targeted fallback response');
-        return fallbackResponse;
-      }
+      console.log('✅ Using fallback response for:', userQuestion);
+      return fallbackResponse;
     }
 
     try {
@@ -214,6 +209,20 @@ Answer: Christine`;
       question.includes('located')
     ) {
       return 'Christine is based in the United States! She has an international background though - she studied in Germany during college and completed a web development bootcamp in Buenos Aires, Argentina. This global experience gives her a unique perspective on creating inclusive, accessible web applications.';
+    }
+
+    // General questions about Christine - catch broader inquiries
+    if (
+      question.includes('tell me about') ||
+      question.includes('what else') ||
+      question.includes('more about') ||
+      question.includes('about christine') ||
+      question.includes('about her') ||
+      question.includes('who is') ||
+      question.includes('describe') ||
+      question.includes('background')
+    ) {
+      return "Christine is a Full Stack Developer with a fascinating journey! She has a triple major in Philosophy, German, and Spanish, studied in Germany, earned a Master's in Religious History, then pivoted to web development. She's worked at TSI on IoT platforms, the Science Museum on interactive apps, and Best Buy on analytics. She specializes in React, Vue.js, Node.js, and Three.js - creating beautiful, accessible web experiences!";
     }
 
     // Default response
