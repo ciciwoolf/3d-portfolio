@@ -37,13 +37,13 @@ class AIService {
   createPersonalizedPrompt(userQuestion) {
     const context = backgroundAPI.getContextForAI(userQuestion);
 
-    const prompt = `You are Christine Woolf's helpful AI assistant. Answer questions about Christine professionally and enthusiastically.
+    const prompt = `I am Christine Woolf's AI assistant. I help people learn about Christine's background and experience.
 
 ${context}
 
-User Question: ${userQuestion}
+Question: ${userQuestion}
 
-Answer as Christine's assistant (keep it concise and helpful):`;
+Response:`;
 
     return prompt;
   }
@@ -53,16 +53,17 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    */
   async generateResponse(userQuestion) {
     console.log('🤖 Generating response for:', userQuestion);
-    
+
     // Set to false to use background API + AI model instead of hardcoded fallbacks
-    const useFallbackFirst = true;
+    const useFallbackFirst = false; // Changed to false to enable AI!
+
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
       if (
         fallbackResponse &&
         !fallbackResponse.includes("I'm Christine's AI assistant!")
       ) {
-        console.log('✅ Using targeted fallback response');
+        console.log('✅Using targeted fallback response');
         return fallbackResponse;
       }
     }
@@ -79,26 +80,23 @@ Answer as Christine's assistant (keep it concise and helpful):`;
       console.log('Using prompt preview:', prompt.substring(0, 150) + '...');
 
       const result = await generator(prompt, {
-        max_length: 120, // Shorter responses
-        temperature: 0.5, // Less random
+        max_length: 200, // Longer responses for demo
+        temperature: 0.6, // Slightly more creative
         do_sample: true,
-        top_p: 0.8,
+        top_p: 0.85,
         pad_token_id: 50256,
+        repetition_penalty: 1.1, // Reduce repetition
       });
 
       let response = result[0].generated_text.replace(prompt, '').trim();
       response = this.cleanResponse(response);
 
-      if (
-        !response ||
-        response.length < 10 ||
-        (response.includes('Christine Woolf') && response.length < 50)
-      ) {
-        console.log('AI response inadequate, using fallback');
+      if (!response || response.length < 5) {
+        console.log('AI response too short, using fallback');
         return this.getFallbackResponse(userQuestion);
       }
 
-      console.log('AI response generated successfully');
+      console.log('🤖 AI response generated successfully:', response);
       return response;
     } catch (error) {
       console.error('AI generation error:', error);
