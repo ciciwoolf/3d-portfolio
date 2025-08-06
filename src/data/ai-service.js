@@ -53,11 +53,9 @@ Answer as Christine's assistant (keep it concise and helpful):`;
    */
   async generateResponse(userQuestion) {
     console.log('🤖 Generating response for:', userQuestion);
-
-    // For now, prioritize fallback responses for reliability
-    // You can enable AI by setting this to false
+    
+    // Set to false to use background API + AI model instead of hardcoded fallbacks
     const useFallbackFirst = true;
-
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
       if (
