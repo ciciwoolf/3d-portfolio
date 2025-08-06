@@ -1,16 +1,16 @@
 import Fuse from 'fuse.js';
-import christineKnowledge from './christine-knowledge.json' with { type: 'json' };
+import backgroundData from './background.json' with { type: 'json' };
 
 /**
- * Knowledge API - Smart retrieval system for Christine's information
+ * Background API - Smart retrieval system for Background and Experience Data
  *
  * This provides intelligent search and context retrieval for the AI chatbot
  * Instead of a database, we use JSON + fuzzy search for simplicity and speed
  */
 
-class ChristineKnowledgeAPI {
+class BackgroundAPI {
   constructor() {
-    this.knowledge = christineKnowledge;
+    this.background = backgroundData;
     this.setupSearch();
   }
 
@@ -18,7 +18,7 @@ class ChristineKnowledgeAPI {
     // Create searchable content from all sections
     const searchableContent = [
       // FAQ entries
-      ...this.knowledge.faq.map((item) => ({
+      ...this.background.faq.map((item) => ({
         type: 'faq',
         content: `${item.question} ${item.answer}`,
         data: item,
@@ -29,9 +29,9 @@ class ChristineKnowledgeAPI {
       {
         type: 'skills',
         content: `skills technologies frontend backend ${JSON.stringify(
-          this.knowledge.skills
+          this.background.skills
         )}`,
-        data: this.knowledge.skills,
+        data: this.background.skills,
         keywords: ['skills', 'technologies', 'tech', 'programming'],
       },
 
@@ -39,9 +39,9 @@ class ChristineKnowledgeAPI {
       {
         type: 'education',
         content: `education school college university study ${JSON.stringify(
-          this.knowledge.personal.education
+          this.background.personal.education
         )} philosophy german spanish classical studies concordia college luther seminary friedrich schiller universität jena germany digitalhouse buenos aires web development bootcamp`,
-        data: this.knowledge.personal.education,
+        data: this.background.personal.education,
         keywords: [
           'education',
           'school',
@@ -55,7 +55,7 @@ class ChristineKnowledgeAPI {
       },
 
       // Projects
-      ...this.knowledge.projects.map((project) => ({
+      ...this.background.projects.map((project) => ({
         type: 'project',
         content: `${project.name} ${
           project.description
@@ -68,9 +68,9 @@ class ChristineKnowledgeAPI {
       {
         type: 'personal',
         content: `${
-          this.knowledge.personal.bio
-        } ${this.knowledge.personal.interests.join(' ')}`,
-        data: this.knowledge.personal,
+          this.background.personal.bio
+        } ${this.background.personal.interests.join(' ')}`,
+        data: this.background.personal,
         keywords: ['about', 'bio', 'background', 'personal'],
       },
     ];
@@ -228,5 +228,5 @@ Name Information:
 }
 
 // Export singleton instance
-export const knowledgeAPI = new ChristineKnowledgeAPI();
+export const knowledgeAPI = new BackgroundAPI();
 export default knowledgeAPI;
