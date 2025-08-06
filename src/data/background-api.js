@@ -1,42 +1,144 @@
 import Fuse from 'fuse.js';
-import backgroundData from './background.json' with { type: 'json' };
 
 /**
- * Background API - Smart retrieval system for Background and Experience Data
- *
- * This provides intelligent search and context retrieval for the AI chatbot
- * Instead of a database, we use JSON + fuzzy search for simplicity and speed
+ * Background API - Smart retrieval system for Background and Experience
  */
 
 class BackgroundAPI {
   constructor() {
-    this.background = backgroundData;
-    this.setupSearch();
+    this.background = null;
+    this.fuse = null;
+    this.isInitialized = false;
+    this.loadBackground();
   }
 
-  setupSearch() {
-    // Create searchable content from all sections
-    const searchableContent = [
-      // FAQ entries
-      ...this.background.faq.map((item) => ({
-        type: 'faq',
-        content: `${item.question} ${item.answer}`,
-        data: item,
-        keywords: item.keywords,
-      })),
+  /**
+   * Step 1: Load the data
+   */
+  async loadBackground() {
+    console.log('loading background data...');
 
-      // Skills
-      {
+    try {
+      await this.tryLoadMethods();
+
+      if (!this.background) {
+        throw new Error('Failed to load background data with any method');
+      }
+
+      console.log('Background data loaded successfully');
+      console.log('Data structure:', Object.keys(this.background));
+
+      this.setupSearch();
+      this.isInitialized = true;
+    } catch (error) {
+      console.error('failed to load background data', error);
+      this.setupFallback();
+    }
+  }
+
+  async tryLoadMethods() {
+    // First try dynamic import
+    try {
+      console.log('Trying dynamic import');
+      const module = await import('./background.json');
+      this.background = module.default || module;
+      return;
+    } catch (error) {
+      console.log('Method 1 failed:', error.message);
+    }
+
+    try {
+      const response = await fetch('/background.json');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      this.background = await response.json();
+      return;
+    } catch (error) {
+      console.log('Method 2 failed:', error.message);
+    }
+
+    try {
+      console.log('Trying method 3: Static import with assertion...');
+      const { default: data } = await import('./background.json', {
+        assert: { type: 'json' },
+      });
+      this.background = data;
+      console.log('  Method 3 successful');
+      return;
+    } catch (error) {
+      console.log('  Method 3 failed:', error.message);
+    }
+  }
+
+  /**
+   * Step 2: Set up the search system
+   */
+  setupSearch() {
+    console.log('Step 2: Setting up search system...');
+
+    if (!this.background) {
+      console.error('Cannot setup search: no background data');
+      return;
+    }
+
+    // Validate data structure
+    const requiredFields = ['faq', 'skills', 'projects', 'personal'];
+    const missingFields = requiredFields.filter(
+      (field) => !this.background[field]
+    );
+
+    if (missingFields.length > 0) {
+      console.error('Missing required fields:', missingFields);
+      console.log('Available fields:', Object.keys(this.background));
+      return;
+    }
+
+    // Create searchable content
+    const searchableContent = this.createSearchableContent();
+    console.log('Created searchable items:', searchableContent.length);
+
+    // Configure fuzzy search
+    const fuseOptions = {
+      keys: ['content', 'keywords'],
+      threshold: 0.4,
+      includeScore: true,
+    };
+
+    this.fuse = new Fuse(searchableContent, fuseOptions);
+    console.log('Search system initialized');
+  }
+
+  createSearchableContent() {
+    const content = [];
+    // FAQ entries
+    if (this.background.faq && Array.isArray(this.background.faq)) {
+      console.log(`  Adding ${this.background.faq.length} FAQ items`);
+      content.push(
+        ...this.background.faq.map((item) => ({
+          type: 'faq',
+          content: `${item.question} ${item.answer}`,
+          data: item,
+          keywords: item.keywords || [],
+        }))
+      );
+    }
+
+    // Skills
+    if (this.background.skills) {
+      console.log('Adding skills section');
+      content.push({
         type: 'skills',
         content: `skills technologies frontend backend ${JSON.stringify(
           this.background.skills
         )}`,
         data: this.background.skills,
         keywords: ['skills', 'technologies', 'tech', 'programming'],
-      },
+      });
+    }
 
-      // Education - Add dedicated education section
-      {
+    // Education
+    if (this.background.personal?.education) {
+      console.log('Adding education section');
+      content.push({
         type: 'education',
         content: `education school college university study ${JSON.stringify(
           this.background.personal.education
@@ -52,105 +154,174 @@ class BackgroundAPI {
           'graduate',
           'undergraduate',
         ],
-      },
+      });
+    }
 
-      // Projects
-      ...this.background.projects.map((project) => ({
-        type: 'project',
-        content: `${project.name} ${
-          project.description
-        } ${project.technologies.join(' ')}`,
-        data: project,
-        keywords: ['projects', 'work', 'portfolio', ...project.technologies],
-      })),
+    // Projects
+    if (this.background.projects && Array.isArray(this.background.projects)) {
+      console.log(`  Adding ${this.background.projects.length} project items`);
+      content.push(
+        ...this.background.projects.map((project) => ({
+          type: 'project',
+          content: `${project.name} ${project.description} ${
+            project.technologies?.join(' ') || ''
+          }`,
+          data: project,
+          keywords: [
+            'projects',
+            'work',
+            'portfolio',
+            ...(project.technologies || []),
+          ],
+        }))
+      );
+    }
 
-      // Personal info
-      {
+    // Personal info
+    if (this.background.personal) {
+      console.log('  Adding personal info section');
+      content.push({
         type: 'personal',
-        content: `${
-          this.background.personal.bio
-        } ${this.background.personal.interests.join(' ')}`,
+        content: `${this.background.personal.bio} ${
+          this.background.personal.interests?.join(' ') || ''
+        }`,
         data: this.background.personal,
         keywords: ['about', 'bio', 'background', 'personal'],
+      });
+    }
+
+    return content;
+  }
+
+  setupFallback() {
+    console.log('Setting up fallback data...');
+    this.background = {
+      personal: {
+        name: 'Christine Woolf',
+        bio: 'Full Stack Developer passionate about modern web applications',
       },
-    ];
-
-    // Configure fuzzy search
-    const fuseOptions = {
-      keys: ['content', 'keywords'],
-      threshold: 0.4, // Lower = more strict matching
-      includeScore: true,
+      faq: [],
+      skills: { frontend: { frameworks: [] }, backend: { runtime: [] } },
+      projects: [],
     };
-
-    this.fuse = new Fuse(searchableContent, fuseOptions);
+    this.setupSearch();
   }
 
   /**
-   * Find relevant context for a user question
-   * @param {string} query - User's question/message
-   * @param {number} maxResults - Maximum number of results to return
-   * @returns {Array} Relevant context pieces
+   * Wait for initialization before using
+   */
+  async waitForInitialization() {
+    let attempts = 0;
+    while (!this.isInitialized && attempts < 50) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      attempts++;
+    }
+
+    if (!this.isInitialized) {
+      console.warn('Background API not ready after 5 seconds');
+    }
+    return this.isInitialized;
+  }
+
+  /**
+   * Find relevant context (with debug info)
    */
   findRelevantContext(query, maxResults = 3) {
-    const results = this.fuse.search(query, { limit: maxResults });
+    if (!this.fuse) {
+      console.error('Search not available - fuse not initialized');
+      return [];
+    }
 
-    return results.map((result) => ({
-      type: result.item.type,
-      data: result.item.data,
-      relevanceScore: 1 - result.score, // Convert to 0-1 where 1 is perfect match
-      content: result.item.content,
-    }));
+    console.log(`🔍 Searching for: "${query}"`);
+    const results = this.fuse.search(query, { limit: maxResults });
+    console.log(`📊 Found ${results.length} results`);
+
+    return results.map((result) => {
+      const relevanceScore = 1 - result.score;
+      console.log(
+        `  ${result.item.type}: ${relevanceScore.toFixed(2)} relevance`
+      );
+
+      return {
+        type: result.item.type,
+        data: result.item.data,
+        relevanceScore,
+        content: result.item.content,
+      };
+    });
   }
 
   /**
-   * Get context for AI prompt generation
-   * @param {string} userQuestion - User's question
-   * @returns {string} Formatted context string for AI
+   * Get context for AI (with extensive debugging)
    */
   getContextForAI(userQuestion) {
-    const question = userQuestion.toLowerCase();
+    console.log('🤖 getContextForAI called with:', userQuestion);
 
-    console.log('getContextForAI called with:', userQuestion);
-    console.log('Lowercase question:', question);
+    if (!this.isInitialized) {
+      console.warn('⚠️ API not initialized, using fallback');
+      return this.getDefaultContext();
+    }
+
+    const question = userQuestion.toLowerCase();
+    console.log('🔤 Lowercase question:', question);
 
     // Always include basic personal info
-    let context = `
+    let context = this.getBasicPersonalInfo();
+
+    // Add keyword-based context
+    context += this.getKeywordBasedContext(question);
+
+    // Get relevant dynamic content
+    const relevantInfo = this.findRelevantContext(userQuestion);
+    if (relevantInfo.length > 0) {
+      context += this.formatRelevantInfo(relevantInfo);
+    }
+
+    console.log('📝 Final context length:', context.length);
+    console.log('📄 Context preview:', context.substring(0, 200) + '...');
+
+    return context;
+  }
+
+  getBasicPersonalInfo() {
+    return `
 About Christine Woolf:
 - Full name: Christine Woolf (last name: Woolf)
-- Education: Triple major in Philosophy, German, and Spanish with minor in Classical Studies at Concordia College; Master's in Religious History at Luther Seminary; Senior year at Friedrich Schiller Universität in Jena, Germany; Web Development bootcamp at Digitalhouse in Buenos Aires
 - Current role: Full Stack Developer
 - Location: Based in the United States
 `;
+  }
 
-    // Add specific context based on question keywords
-    if (
-      question.includes('education') ||
-      question.includes('study') ||
-      question.includes('college') ||
-      question.includes('university') ||
-      question.includes('school') ||
-      question.includes('degree') ||
-      question.includes('studied') ||
-      question.includes('learn') ||
-      question.includes('go to')
-    ) {
-      console.log(
-        'Education keywords detected, adding detailed education info'
-      );
-      context += `
+  getKeywordBasedContext(question) {
+    let additionalContext = '';
+
+    // Education keywords
+    const educationKeywords = [
+      'education',
+      'study',
+      'college',
+      'university',
+      'school',
+      'degree',
+      'studied',
+      'learn',
+      'go to',
+    ];
+    if (educationKeywords.some((keyword) => question.includes(keyword))) {
+      console.log('🎓 Education keywords detected');
+      additionalContext += `
 Educational Details:
-- Studied Philosophy, German, and Spanish at Concordia College
-- Won music scholarship for saxophone performance
-- Completed senior year in Germany (all coursework in German except Spanish literature)
-- Studied Lutheran theology and Hegel's philosophy
-- Conducted independent research on Maya sociopolitical history in Guatemala
-- Master's in Religious History with expertise in classical Latin, Biblical Greek, and classical Arabic
-- Career transition: Studied web development at Digitalhouse in Buenos Aires (2019)
+- Triple major in Philosophy, German, and Spanish at Concordia College
+- Master's in Religious History at Luther Seminary
+- Senior year at Friedrich Schiller Universität in Jena, Germany
+- Web Development bootcamp at Digitalhouse in Buenos Aires
 `;
     }
 
+    // Name keywords
     if (question.includes('name') || question.includes('woolf')) {
-      context += `
+      console.log('🏷️ Name keywords detected');
+      additionalContext += `
 Name Information:
 - Full name: Christine Woolf
 - Last name: Woolf
@@ -158,55 +329,55 @@ Name Information:
 `;
     }
 
-    // Get relevant dynamic content from existing search system
-    const relevantInfo = this.findRelevantContext(userQuestion);
-    console.log('Relevant info found:', relevantInfo.length, 'items');
+    return additionalContext;
+  }
 
-    if (relevantInfo.length > 0) {
-      context += '\nAdditional relevant information:\n';
+  formatRelevantInfo(relevantInfo) {
+    let context = '\nAdditional relevant information:\n';
 
-      relevantInfo.forEach((info) => {
-        console.log('Processing info type:', info.type);
-        switch (info.type) {
-          case 'faq':
-            context += `\nQ: ${info.data.question}\nA: ${info.data.answer}\n`;
-            break;
-          case 'skills':
-            context += `\nSKILLS: ${this.formatSkills(info.data)}\n`;
-            break;
-          case 'education':
-            context += `\nEDUCATION: ${this.formatEducation(info.data)}\n`;
-            break;
-          case 'project':
-            context += `\nPROJECT: ${info.data.name}\n${
-              info.data.description
-            }\nTech: ${info.data.technologies.join(', ')}\n`;
-            break;
-          case 'personal':
-            context += `\nABOUT: ${
-              info.data.bio
-            }\nInterests: ${info.data.interests.join(', ')}\n`;
-            break;
-        }
-      });
-    }
+    relevantInfo.forEach((info) => {
+      console.log(`📎 Processing info type: ${info.type}`);
+      switch (info.type) {
+        case 'faq':
+          context += `\nQ: ${info.data.question}\nA: ${info.data.answer}\n`;
+          break;
+        case 'skills':
+          context += `\nSKILLS: ${this.formatSkills(info.data)}\n`;
+          break;
+        case 'education':
+          context += `\nEDUCATION: ${this.formatEducation(info.data)}\n`;
+          break;
+        case 'project':
+          context += `\nPROJECT: ${info.data.name}\n${
+            info.data.description
+          }\nTech: ${info.data.technologies?.join(', ') || 'N/A'}\n`;
+          break;
+        case 'personal':
+          context += `\nABOUT: ${info.data.bio}\nInterests: ${
+            info.data.interests?.join(', ') || 'N/A'
+          }\n`;
+          break;
+      }
+    });
 
-    console.log('Final context length:', context.length);
     return context;
   }
 
   formatSkills(skills) {
-    return `Frontend: ${skills.frontend.frameworks.join(
-      ', '
-    )} | Backend: ${skills.backend.runtime.join(
-      ', '
-    )}, ${skills.backend.apis.join(
-      ', '
-    )} | Tools: ${skills.tools.development.join(', ')}`;
+    const frontend = skills.frontend?.frameworks?.join(', ') || 'N/A';
+    const backend = skills.backend?.runtime?.join(', ') || 'N/A';
+    const apis = skills.backend?.apis?.join(', ') || 'N/A';
+    const tools = skills.tools?.development?.join(', ') || 'N/A';
+
+    return `Frontend: ${frontend} | Backend: ${backend}, ${apis} | Tools: ${tools}`;
   }
 
   formatEducation(education) {
-    return `Undergraduate: ${education.undergraduate} | Graduate: ${education.graduate} | International: ${education.international} | Bootcamp: ${education.bootcamp}`;
+    return `Undergraduate: ${education.undergraduate || 'N/A'} | Graduate: ${
+      education.graduate || 'N/A'
+    } | International: ${education.international || 'N/A'} | Bootcamp: ${
+      education.bootcamp || 'N/A'
+    }`;
   }
 
   getDefaultContext() {
@@ -214,19 +385,22 @@ Name Information:
   }
 
   /**
-   * Get all available information categories
+   * Debug method to inspect current state
    */
-  getAvailableTopics() {
-    return {
-      skills: 'Technical skills and technologies',
-      projects: 'Portfolio projects and work examples',
-      experience: 'Professional background and approach',
-      personal: 'Background and interests',
-      contact: 'How to get in touch',
-    };
+  debugState() {
+    console.log('🔍 Background API Debug State:');
+    console.log('  Initialized:', this.isInitialized);
+    console.log('  Has background data:', !!this.background);
+    console.log('  Has search (fuse):', !!this.fuse);
+
+    if (this.background) {
+      console.log('  Background keys:', Object.keys(this.background));
+      console.log('  FAQ items:', this.background.faq?.length || 0);
+      console.log('  Projects:', this.background.projects?.length || 0);
+    }
   }
 }
 
 // Export singleton instance
-export const knowledgeAPI = new BackgroundAPI();
-export default knowledgeAPI;
+export const backgroundAPI = new BackgroundAPI();
+export default backgroundAPI;

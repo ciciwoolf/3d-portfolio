@@ -126,7 +126,7 @@
       "company": "Science Museum of Minnesota",
       "role": "Full Stack Developer",
       "type": "Interactive Museum Applications",
-      "description": "Led development of interactive map-based interfaces displaying hundreds of science videos across multiple device types including museum kiosks",
+      "description": "Led development of interactive map-based interfaces displaying hundreds of science videos",
       "technologies": ["React", "Next.js", "Gatsby.js", "GraphQL", "Three.js"],
       "focus": [
         "Accessibility compliance",
@@ -284,13 +284,12 @@
       "Sole maintainer of legacy Cordova mobile application at TSI",
       "Played a key role in successful Vue 2 to Vue 3 migration",
       "Built production IoT data platform serving scientific community",
-      "Optimized 3D web performance for mobile devices",
       "Implemented comprehensive testing strategies for microservices"
     ],
     "leadership": [
       "Mentored junior software engineer",
       "Participated in sprint planning with offshore teams",
-      "Advocated for open source adoption in development stack"
+      "Presented on various topics of web development during company techshares"
     ],
     "academic": [
       "Conducted independent research in Guatemala",
