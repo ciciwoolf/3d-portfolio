@@ -67,14 +67,9 @@ Answer: Christine`;
     return prompt;
   }
 
-  /**
-   * Generate response with AI model or fallback
-   */
   async generateResponse(userQuestion) {
     console.log('Generating response for:', userQuestion);
-
-    // Enable fallback first until we resolve the model download issues
-    const useFallbackFirst = true; // Your background knowledge system is excellent!
+    const useFallbackFirst = false;
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
