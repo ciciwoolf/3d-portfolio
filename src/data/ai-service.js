@@ -32,8 +32,6 @@ class AIService {
    */
   createPersonalizedPrompt(userQuestion) {
     const context = backgroundAPI.getContextForAI(userQuestion);
-
-    // Even simpler - just facts and direct Q&A
     const prompt = `Christine Woolf is a Full Stack Developer. ${context
       .replace(/About Christine Woolf:/g, '')
       .trim()}
@@ -48,14 +46,14 @@ Answer: Christine`;
    * Generate response with AI model or fallback
    */
   async generateResponse(userQuestion) {
-    console.log('🤖 Generating response for:', userQuestion);
+    console.log('Generating response for:', userQuestion);
 
     // Set to true to use reliable fallback responses instead of AI model
     const useFallbackFirst = true; // Using fallbacks for now - AI model giving weird responses
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
-      console.log('✅ Using fallback response for:', userQuestion);
+      console.log('Using fallback response for:', userQuestion);
       return fallbackResponse;
     }
 
@@ -94,7 +92,7 @@ Answer: Christine`;
         return this.getFallbackResponse(userQuestion);
       }
 
-      console.log('🤖 AI response generated successfully:', response);
+      console.log('AI response generated successfully:', response);
       return response;
     } catch (error) {
       console.error('AI generation error:', error);
@@ -121,7 +119,7 @@ Answer: Christine`;
    * Fallback responses using the same context system
    */
   getFallbackResponse(userQuestion) {
-    console.log('🔄 Using fallback response for:', userQuestion);
+    console.log('Using fallback response for:', userQuestion);
 
     const question = userQuestion.toLowerCase();
 
