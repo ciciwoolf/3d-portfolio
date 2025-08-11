@@ -10,10 +10,7 @@ import { useState } from 'react';
  * - Communicates with ChatWindow via onSendMessage callback
  */
 const ChatInput = ({ onSendMessage }) => {
-  // STATE: Current text in the input field
   const [inputValue, setInputValue] = useState('');
-
-  // FUNCTION: Handle form submission (send button or Enter key)
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -26,8 +23,6 @@ const ChatInput = ({ onSendMessage }) => {
     // Clear input field
     setInputValue('');
   };
-
-  // FUNCTION: Handle Enter key press
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();

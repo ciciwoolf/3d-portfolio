@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import ChatInput from './ChatInput';
-import aiService from '../../data/ai-service.js';
+import aiService from '../../data/worker.js';
 
 /**
  * ChatWindow - The main chat interface
@@ -81,6 +81,7 @@ const ChatWindow = ({ onClose }) => {
       <div className="bg-gradient-to-r from-purple-100 to-purple-200 text-white p-4 flex items-center justify-between">
         <div>
           <h3 className="font-semibold">Christine's AI Assistant</h3>
+          <p>...training in progress...</p>
         </div>
         <button
           onClick={onClose}
