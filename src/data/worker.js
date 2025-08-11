@@ -5,7 +5,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/distilgpt2';
+    this.modelName = 'onnx-community/Qwen2.5-Coder-0.5B-Instruct';
   }
 
   async initializeModel() {
@@ -18,7 +18,7 @@ class AIService {
 
       // Add timeout wrapper
       const modelPromise = pipeline('text-generation', this.modelName, {
-        quantized: false,
+        dtype: 'q4', // Use q4 quantization as recommended in docs
         progress_callback: (data) => {
           if (data && data.status) {
             console.log(
@@ -30,9 +30,9 @@ class AIService {
         },
       });
 
-      // 30 second timeout for model loading
+      // 60 second timeout for model loading (increased for demo)
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Model loading timeout')), 30000);
+        setTimeout(() => reject(new Error('Model loading timeout')), 60000);
       });
 
       this.generator = await Promise.race([modelPromise, timeoutPromise]);
@@ -56,20 +56,19 @@ class AIService {
   createPersonalizedPrompt(userQuestion) {
     const context = backgroundAPI.getContextForAI(userQuestion);
 
-    // Even simpler - just facts and direct Q&A
-    const prompt = `Christine Woolf is a Full Stack Developer. ${context
-      .replace(/About Christine Woolf:/g, '')
-      .trim()}
+    const prompt = `System: You are Christine Woolf's AI assistant. Use the following information to answer questions about Christine.
 
-Question: ${userQuestion}
-Answer: Christine`;
+${context.replace(/About Christine Woolf:/g, '').trim()}
+
+User: ${userQuestion}
+Assistant: `;
 
     return prompt;
   }
 
   async generateResponse(userQuestion) {
     console.log('Generating response for:', userQuestion);
-    const useFallbackFirst = false;
+    const useFallbackFirst = false; // Try AI model first
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
@@ -89,18 +88,16 @@ Answer: Christine`;
       console.log('Using prompt preview:', prompt.substring(0, 150) + '...');
 
       const result = await generator(prompt, {
-        max_length: 200, // Longer responses for demo
-        temperature: 0.6, // Slightly more creative
+        max_length: 200,
+        temperature: 0.6,
         do_sample: true,
         top_p: 0.85,
         pad_token_id: 50256,
-        repetition_penalty: 1.1, // Reduce repetition
+        repetition_penalty: 1.1,
       });
 
       let response = result[0].generated_text.replace(prompt, '').trim();
       response = this.cleanResponse(response);
-
-      // Check for common GPT-2 failures
       if (
         !response ||
         response.length < 5 ||
