@@ -1,30 +1,50 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-/**
- * AI Service - Simplified with better fallback integration
- */
 
 class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
+    this.modelName = 'onnx-community/Qwen2.5-Coder-0.5B-Instruct';
   }
 
-  /**
-   * Initialize the AI model
-   */
   async initializeModel() {
     if (this.generator) return this.generator;
 
     try {
-      console.log('🤖 Loading AI model:', this.modelName);
-      this.generator = await pipeline('text-generation', this.modelName);
+      console.log('Loading AI model:', this.modelName);
+      console.log('Pipeline import status:', typeof pipeline);
+      console.log('Starting model download...');
+
+      // Add timeout wrapper
+      const modelPromise = pipeline('text-generation', this.modelName, {
+        dtype: 'q4', // Use q4 quantization as recommended in docs
+        progress_callback: (data) => {
+          if (data && data.status) {
+            console.log(
+              'Model download progress:',
+              data.status,
+              data.file || ''
+            );
+          }
+        },
+      });
+
+      // 60 second timeout for model loading (increased for demo)
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Model loading timeout')), 60000);
+      });
+
+      this.generator = await Promise.race([modelPromise, timeoutPromise]);
+
       this.isModelLoaded = true;
-      console.log('AI model loaded successfully');
+      console.log('AI model loaded successfully:', this.modelName);
       return this.generator;
     } catch (error) {
       console.error('Failed to load AI model:', error);
+      console.error('Error details:', error.message);
+      console.error('Error stack:', error.stack);
+
       this.isModelLoaded = false;
       return null;
     }
@@ -36,29 +56,23 @@ class AIService {
   createPersonalizedPrompt(userQuestion) {
     const context = backgroundAPI.getContextForAI(userQuestion);
 
-    // Even simpler - just facts and direct Q&A
-    const prompt = `Christine Woolf is a Full Stack Developer. ${context
-      .replace(/About Christine Woolf:/g, '')
-      .trim()}
+    const prompt = `System: You are Christine Woolf's AI assistant. Use the following information to answer questions about Christine.
 
-Question: ${userQuestion}
-Answer: Christine`;
+${context.replace(/About Christine Woolf:/g, '').trim()}
+
+User: ${userQuestion}
+Assistant: `;
 
     return prompt;
   }
 
-  /**
-   * Generate response with AI model or fallback
-   */
   async generateResponse(userQuestion) {
-    console.log('🤖 Generating response for:', userQuestion);
-
-    // Set to true to use reliable fallback responses instead of AI model
-    const useFallbackFirst = true; // Using fallbacks for now - AI model giving weird responses
+    console.log('Generating response for:', userQuestion);
+    const useFallbackFirst = false; // Try AI model first
 
     if (useFallbackFirst) {
       const fallbackResponse = this.getFallbackResponse(userQuestion);
-      console.log('✅ Using fallback response for:', userQuestion);
+      console.log('Using fallback response for:', userQuestion);
       return fallbackResponse;
     }
 
@@ -74,18 +88,16 @@ Answer: Christine`;
       console.log('Using prompt preview:', prompt.substring(0, 150) + '...');
 
       const result = await generator(prompt, {
-        max_length: 200, // Longer responses for demo
-        temperature: 0.6, // Slightly more creative
+        max_length: 200,
+        temperature: 0.6,
         do_sample: true,
         top_p: 0.85,
         pad_token_id: 50256,
-        repetition_penalty: 1.1, // Reduce repetition
+        repetition_penalty: 1.1,
       });
 
       let response = result[0].generated_text.replace(prompt, '').trim();
       response = this.cleanResponse(response);
-
-      // Check for common GPT-2 failures
       if (
         !response ||
         response.length < 5 ||
@@ -97,7 +109,7 @@ Answer: Christine`;
         return this.getFallbackResponse(userQuestion);
       }
 
-      console.log('🤖 AI response generated successfully:', response);
+      console.log('AI response generated successfully:', response);
       return response;
     } catch (error) {
       console.error('AI generation error:', error);
@@ -124,7 +136,7 @@ Answer: Christine`;
    * Fallback responses using the same context system
    */
   getFallbackResponse(userQuestion) {
-    console.log('🔄 Using fallback response for:', userQuestion);
+    console.log('Using fallback response for:', userQuestion);
 
     const question = userQuestion.toLowerCase();
 

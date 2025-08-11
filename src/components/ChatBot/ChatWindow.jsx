@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import ChatInput from './ChatInput';
-import aiService from '../../data/ai-service.js';
+import aiService from '../../data/worker.js';
 
 /**
  * ChatWindow - The main chat interface
