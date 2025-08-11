@@ -1,14 +1,11 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-/**
- * AI Service - Simplified with better fallback integration
- */
 
 class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
+    this.modelName = 'Xenova/Phi-3-mini-4k-instruct';
   }
 
   /**
@@ -18,7 +15,7 @@ class AIService {
     if (this.generator) return this.generator;
 
     try {
-      console.log('🤖 Loading AI model:', this.modelName);
+      console.log('Loading AI model:', this.modelName);
       this.generator = await pipeline('text-generation', this.modelName);
       this.isModelLoaded = true;
       console.log('AI model loaded successfully');
