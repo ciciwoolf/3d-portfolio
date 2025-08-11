@@ -1,6 +1,5 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-window.backgroundAPI = backgroundAPI;
 /**
  * AI Service - Simplified with better fallback integration
  */
@@ -9,7 +8,7 @@ class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/gpt2';
+    this.modelName = 'Xenova/Phi-3-mini-4k-instruct'; // Better conversational model
   }
 
   /**

@@ -34,6 +34,7 @@ const ChatInput = ({ onSendMessage }) => {
   return (
     <div className="border-t border-gray-200 p-4 bg-white">
       <form onSubmit={handleSubmit} className="flex space-x-2">
+        {/* TEXT INPUT */}
         <input
           type="text"
           value={inputValue}
