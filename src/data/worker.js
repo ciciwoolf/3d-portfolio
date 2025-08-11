@@ -1,20 +1,13 @@
 import { pipeline } from '@xenova/transformers';
 import backgroundAPI from './background-api.js';
-window.backgroundAPI = backgroundAPI;
-/**
- * AI Service - Simplified with better fallback integration
- */
 
 class AIService {
   constructor() {
     this.generator = null;
     this.isModelLoaded = false;
-    this.modelName = 'Xenova/distilgpt2'; // Back to a proper text generation model
+    this.modelName = 'Xenova/distilgpt2';
   }
 
-  /**
-   * Initialize the AI model with timeout
-   */
   async initializeModel() {
     if (this.generator) return this.generator;
 
