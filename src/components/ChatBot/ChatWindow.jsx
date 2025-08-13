@@ -38,7 +38,6 @@ const ChatWindow = ({ onClose }) => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // FUNCTION: Add a new message to the conversation
   const addMessage = (text, isBot = false) => {
     const newMessage = {
       id: Date.now(),
@@ -50,7 +49,6 @@ const ChatWindow = ({ onClose }) => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  // FUNCTION: Handle user sending a message
   const handleSendMessage = async (userMessage) => {
     // 1. Add user message immediately
     addMessage(userMessage, false);

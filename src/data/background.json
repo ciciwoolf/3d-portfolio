@@ -1,8 +1,9 @@
 {
   "personal": {
     "name": "Christine Woolf",
+    "nickname": "Cici",
     "title": "Full Stack Developer",
-    "bio": "I'm a Full Stack Developer passionate about crafting intuitive user interfaces and building accessible, responsive web applications. My work spans frontend development with modern frameworks like React and Vue, and backend experience building APIs and services with Node.js, GraphQL, and MongoDB.",
+    "bio": "Christine is a Full Stack Developer passionate about crafting intuitive user interfaces and building accessible, responsive web applications. Her work spans frontend development with modern frameworks like React and Vue, and backend experience building APIs and services with Node.js, GraphQL, and MongoDB.",
     "location": "Based in the United States",
     "personality": "friendly, professional, enthusiastic about solving problems",
     "communication_style": "clear, helpful, detail-oriented",
@@ -96,12 +97,11 @@
       "duration": "2.5 years",
       "role": "Full Stack Developer",
       "type": "IoT Data Platform",
-      "description": "Developed comprehensive IoT data platform serving air quality technicians and environmental monitoring professionals",
+      "description": "Developed Vue.js/TypeScript Excel Add-in for data visualization with supporting JavaScript and GoLang APIs for cloud data access and user subscription management",
       "key_projects": [
-        "Built subscription API for device data access",
-        "Developed microservices architecture using GoLang APIs",
-        "Created Vue.js application integrated with Microsoft Excel",
-        "Managed complete pipeline from IoT device data collection to end-user analysis",
+        "Developed Vue.js/TypeScript Excel Add-in for data visualization",
+        "Built JavaScript and GoLang APIs for cloud data querying and user subscription management",
+        "Managed data pipeline from cloud storage to Excel-based analysis tools",
         "Contributed significantly to Vue 2 to Vue 3 migration for customer website platform",
         "Developed custom endpoints using MongoDB aggregation pipelines for finance team"
       ],
@@ -170,7 +170,7 @@
     {
       "id": "ai-chatbot",
       "name": "Portfolio AI Chatbot",
-      "description": "Browser-based AI chatbot using Transformers.js and RAG architecture to answer questions about my professional background",
+      "description": "Browser-based AI chatbot using Transformers.js and RAG architecture to answer questions about Christine's professional background",
       "technologies": [
         "JavaScript",
         "Transformers.js",
@@ -223,28 +223,33 @@
 
   "faq": [
     {
-      "question": "What technologies do you work with?",
-      "answer": "I primarily work with React.js and Vue.js for frontend development, Node.js and GoLang for backend services, and modern tools like Vite, Three.js, and Tailwind CSS. I'm experienced with GraphQL, MongoDB, REST APIs, and have specialized experience with IoT data platforms and AI integration.",
+      "question": "What's her name and does she have a nickname?",
+      "answer": "Her full name is Christine Woolf, but she also goes by Cici! She's a Full Stack Developer passionate about creating amazing web experiences with modern technologies like React, Vue.js, and Three.js.",
+      "keywords": ["name", "cici", "christine", "nickname", "who are you"]
+    },
+    {
+      "question": "What technologies does she work with?",
+      "answer": "She primarily works with React.js and Vue.js for frontend development, Node.js and GoLang for backend services, and modern tools like Vite, Three.js, and Tailwind CSS. She's experienced with GraphQL, MongoDB, REST APIs, and has specialized experience with IoT data platforms and AI integration.",
       "keywords": ["technologies", "tech stack", "skills", "tools"]
     },
     {
-      "question": "What kind of projects do you build?",
-      "answer": "I focus on building modern, accessible web applications with great user experiences. This includes interactive portfolios, IoT data platforms, responsive web apps, museum interfaces, subscription management systems, and AI-powered applications. I have particular experience with complex data visualization and real-time systems.",
+      "question": "What kind of projects does she build?",
+      "answer": "She focuses on building modern, accessible web applications with great user experiences. This includes interactive portfolios, IoT data platforms, responsive web apps, museum interfaces, subscription management systems, and AI-powered applications. She has particular experience with complex data visualization and real-time systems.",
       "keywords": ["projects", "work", "portfolio", "applications"]
     },
     {
-      "question": "What's your experience with IoT systems?",
-      "answer": "I spent 2.5 years at TSI building comprehensive IoT data platforms for environmental monitoring. This included managing data pipelines from physical air quality devices through MQTT protocols to cloud storage, building subscription APIs, and creating interfaces for scientific data analysis with Excel integration.",
+      "question": "What's her experience with IoT systems?",
+      "answer": "She spent 2.5 years at TSI building comprehensive IoT data platforms for environmental monitoring. This included managing data pipelines from physical air quality devices through MQTT protocols to cloud storage, building subscription APIs, and creating interfaces for scientific data analysis with Excel integration.",
       "keywords": ["iot", "data platforms", "environmental monitoring", "tsi"]
     },
     {
-      "question": "How can I contact you?",
-      "answer": "You can connect with me on LinkedIn at https://www.linkedin.com/in/christinewoolf/",
+      "question": "How can I contact her?",
+      "answer": "You can connect with her on LinkedIn at https://www.linkedin.com/in/christinewoolf/",
       "keywords": ["contact", "reach out", "connect", "linkedin", "email"]
     },
     {
-      "question": "What's your development approach?",
-      "answer": "I believe in writing clean, maintainable code with a focus on user experience and accessibility. I prioritize scalable architecture, comprehensive testing strategies, and collaborative development. My experience spans from IoT systems requiring high reliability to public-facing applications needing optimal performance across diverse environments.",
+      "question": "What's her development approach?",
+      "answer": "She believes in writing clean, maintainable code with a focus on user experience and accessibility. She prioritizes scalable architecture, comprehensive testing strategies, and collaborative development. Her experience spans from IoT systems requiring high reliability to public-facing applications needing optimal performance across diverse environments.",
       "keywords": [
         "approach",
         "methodology",
@@ -253,8 +258,8 @@
       ]
     },
     {
-      "question": "What's your background before programming?",
-      "answer": "I have a diverse background in languages, philosophy, and music. I studied in Germany, conducted research in Guatemala, and taught ESL while traveling through Central and South America. This international experience and multilingual background brings unique perspectives to my development work, especially in building accessible, global applications.",
+      "question": "What's her background before programming?",
+      "answer": "She has a diverse background in languages, philosophy, and music. She studied in Germany, conducted research in Guatemala, and taught ESL while traveling through Central and South America. This international experience and multilingual background brings unique perspectives to her development work, especially in building accessible, global applications.",
       "keywords": [
         "background",
         "education",
@@ -268,7 +273,7 @@
   "personality_traits": {
     "professional_style": "collaborative, solution-focused, detail-oriented",
     "technical_interests": "UI/UX, 3D web graphics, performance optimization, accessibility, IoT systems, AI integration",
-    "communication": "I explain things clearly and enjoy helping others understand complex concepts. My teaching background helps me break down technical topics effectively.",
+    "communication": "She explains things clearly and enjoys helping others understand complex concepts. Her teaching background helps her break down technical topics effectively.",
     "values": "clean code, user experience, accessibility, continuous learning, open source collaboration",
     "unique_strengths": [
       "Multilingual communication skills",
