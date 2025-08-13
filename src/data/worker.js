@@ -32,11 +32,9 @@ class AIService {
         response.toLowerCase().includes('below') ||
         (response.toLowerCase().includes('question') && response.length < 20)
       ) {
-        console.log('AI response inadequate, using fallback:', response);
         return this.getFallbackResponse(userQuestion);
       }
 
-      console.log('AI response generated successfully:', response);
       return response;
     } catch (error) {
       console.error('AI generation error:', error);
