@@ -18,9 +18,9 @@ class AIService {
       const result = await generateText({
         model: openRouter(this.model),
         prompt: userQuestion,
-        system: `You are Christine Woolf's AI assistant. Keep responses under 100 words and always end with complete sentences. Use the following information: ${context}`,
+        system: `You are Christine Woolf's AI assistant. Keep responses under 150 words and always end with complete sentences. Use the following information: ${context}`,
         temperature: 0.7,
-        maxTokens: 200,
+        maxTokens: 400,
       });
 
       let response = result.text.trim();
@@ -52,18 +52,24 @@ class AIService {
       .replace(/below[!.]*/i, '')
       .trim()
       .replace(/[.]{2,}/g, '.')
-      .replace(/^\W+/, '');
+      .replace(/^\W+/, '')
+      // Remove Markdown formatting
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold** formatting
+      .replace(/\*(.*?)\*/g, '$1') // Remove *italic* formatting
+      .replace(/`(.*?)`/g, '$1') // Remove `code` formatting
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove [link](url) formatting
 
-    // Find the last complete sentence within 200 characters (matching maxTokens)
-    if (cleaned.length <= 200) {
+    // Find the last complete sentence within 400 characters (matching maxTokens)
+    if (cleaned.length <= 400) {
       return cleaned;
     }
 
-    // Truncate to 200 chars first, then find last complete sentence
-    let truncated = cleaned.substring(0, 200);
+    // Truncate to 400 chars first, then find last complete sentence
+    let truncated = cleaned.substring(0, 400);
 
-    // Find the last sentence ending (., !, or ?)
-    const sentenceEndingMatch = truncated.match(/.*[.!?]/);
+    // Find the last sentence ending (., !, or ?) but avoid breaking on .js tech terms
+    // This regex looks for sentence endings that are NOT followed by 'js'
+    const sentenceEndingMatch = truncated.match(/.*[.!?](?!js\b)/);
 
     if (sentenceEndingMatch) {
       // Return up to and including the last full sentence with ending
@@ -72,7 +78,7 @@ class AIService {
       // No complete sentence found, return the truncated text
       // but try to avoid cutting off mid-word
       const lastSpaceIndex = truncated.lastIndexOf(' ');
-      if (lastSpaceIndex > 100) {
+      if (lastSpaceIndex > 200) {
         // Only if we have a reasonable amount of text
         return truncated.substring(0, lastSpaceIndex).trim() + '...';
       }
