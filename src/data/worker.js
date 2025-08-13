@@ -1,102 +1,29 @@
-import { pipeline } from '@xenova/transformers';
+import { openRouter } from '../lib/ai.js';
+import { generateText } from 'ai';
 import backgroundAPI from './background-api.js';
 
 class AIService {
   constructor() {
-    this.generator = null;
-    this.isModelLoaded = false;
-    this.modelName = 'onnx-community/Qwen2.5-Coder-0.5B-Instruct';
-  }
-
-  async initializeModel() {
-    if (this.generator) return this.generator;
-
-    try {
-      console.log('Loading AI model:', this.modelName);
-      console.log('Pipeline import status:', typeof pipeline);
-      console.log('Starting model download...');
-
-      // Add timeout wrapper
-      const modelPromise = pipeline('text-generation', this.modelName, {
-        dtype: 'q4', // Use q4 quantization as recommended in docs
-        progress_callback: (data) => {
-          if (data && data.status) {
-            console.log(
-              'Model download progress:',
-              data.status,
-              data.file || ''
-            );
-          }
-        },
-      });
-
-      // 60 second timeout for model loading (increased for demo)
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Model loading timeout')), 60000);
-      });
-
-      this.generator = await Promise.race([modelPromise, timeoutPromise]);
-
-      this.isModelLoaded = true;
-      console.log('AI model loaded successfully:', this.modelName);
-      return this.generator;
-    } catch (error) {
-      console.error('Failed to load AI model:', error);
-      console.error('Error details:', error.message);
-      console.error('Error stack:', error.stack);
-
-      this.isModelLoaded = false;
-      return null;
-    }
-  }
-
-  /**
-   * Create personalized prompt with context
-   */
-  createPersonalizedPrompt(userQuestion) {
-    const context = backgroundAPI.getContextForAI(userQuestion);
-
-    const prompt = `System: You are Christine Woolf's AI assistant. Use the following information to answer questions about Christine.
-
-${context.replace(/About Christine Woolf:/g, '').trim()}
-
-User: ${userQuestion}
-Assistant: `;
-
-    return prompt;
+    this.apiKey = !!import.meta.env.VITE_OPENROUTER_API_KEY;
+    this.model = 'openai/gpt-oss-20b:free';
   }
 
   async generateResponse(userQuestion) {
-    console.log('Generating response for:', userQuestion);
-    const useFallbackFirst = false; // Try AI model first
-
-    if (useFallbackFirst) {
-      const fallbackResponse = this.getFallbackResponse(userQuestion);
-      console.log('Using fallback response for:', userQuestion);
-      return fallbackResponse;
+    if (!this.apiKey) {
+      console.log('OpenRouter API key not set, using fallback');
+      return this.getFallbackResponse(userQuestion);
     }
-
     try {
-      const generator = await this.initializeModel();
-
-      if (!generator) {
-        console.log('AI model unavailable, using fallback');
-        return this.getFallbackResponse(userQuestion);
-      }
-
-      const prompt = this.createPersonalizedPrompt(userQuestion);
-      console.log('Using prompt preview:', prompt.substring(0, 150) + '...');
-
-      const result = await generator(prompt, {
-        max_length: 200,
-        temperature: 0.6,
-        do_sample: true,
-        top_p: 0.85,
-        pad_token_id: 50256,
-        repetition_penalty: 1.1,
+      const context = backgroundAPI.getContextForAI(userQuestion);
+      const result = await generateText({
+        model: openRouter(this.model),
+        prompt: userQuestion,
+        system: `You are Christine Woolf's AI assistant. Keep responses under 100 words and always end with complete sentences. Use the following information: ${context}`,
+        temperature: 0.7,
+        maxTokens: 200,
       });
 
-      let response = result[0].generated_text.replace(prompt, '').trim();
+      let response = result.text.trim();
       response = this.cleanResponse(response);
       if (
         !response ||
@@ -117,19 +44,40 @@ Assistant: `;
     }
   }
 
-  /**
-   * Clean the AI response
-   */
   cleanResponse(response) {
-    return response
-      .split('\n')[0] // Take first line only
-      .replace(/^(Answer:|Response:|A:|Q:)/i, '') // Remove common prefixes
-      .replace(/Please answer.*$/i, '') // Remove "Please answer" artifacts
-      .replace(/below[!.]*/i, '') // Remove "below" artifacts
+    let cleaned = response
+      .split('\n')[0]
+      .replace(/^(Answer:|Response:|A:|Q:)/i, '')
+      .replace(/Please answer.*$/i, '')
+      .replace(/below[!.]*/i, '')
       .trim()
-      .replace(/[.]{2,}/g, '.') // Fix multiple periods
-      .replace(/^\W+/, '') // Remove leading non-word characters
-      .substring(0, 150); // Shorter limit for cleaner responses
+      .replace(/[.]{2,}/g, '.')
+      .replace(/^\W+/, '');
+
+    // Find the last complete sentence within 200 characters (matching maxTokens)
+    if (cleaned.length <= 200) {
+      return cleaned;
+    }
+
+    // Truncate to 200 chars first, then find last complete sentence
+    let truncated = cleaned.substring(0, 200);
+
+    // Find the last sentence ending (., !, or ?)
+    const sentenceEndingMatch = truncated.match(/.*[.!?]/);
+
+    if (sentenceEndingMatch) {
+      // Return up to and including the last full sentence with ending
+      return sentenceEndingMatch[0].trim();
+    } else {
+      // No complete sentence found, return the truncated text
+      // but try to avoid cutting off mid-word
+      const lastSpaceIndex = truncated.lastIndexOf(' ');
+      if (lastSpaceIndex > 100) {
+        // Only if we have a reasonable amount of text
+        return truncated.substring(0, lastSpaceIndex).trim() + '...';
+      }
+      return truncated.trim();
+    }
   }
 
   /**
@@ -163,7 +111,7 @@ Assistant: `;
       question.includes('company') ||
       question.includes('role')
     ) {
-      return 'Christine has 3+ years of professional development experience! She spent 2.5 years at TSI Incorporated building IoT data platforms for environmental monitoring, worked on interactive applications with React and Three.js at the Science Museum of Minnesota, and contributed to e-commerce analytics and tag management systems at Best Buy.';
+      return 'Christine has 3+ years of professional development experience! She spent 2.5 years at TSI Incorporated developing a Vue.js/TypeScript Excel Add-in for data visualization, building JavaScript and GoLang APIs for cloud data querying and user subscriptions. She also worked on interactive applications with React and Three.js at the Science Museum of Minnesota, and contributed to e-commerce analytics and tag management systems at Best Buy.';
     }
 
     // Skills/tech questions
@@ -238,13 +186,6 @@ Assistant: `;
 
     // Default response
     return "I'm Christine's AI assistant! I can tell you about her skills in React, Vue.js, and Node.js, her diverse educational background, professional experience at companies like TSI and the Science Museum, or how to get in touch. What would you like to know?";
-  }
-
-  /**
-   * Check if AI is ready
-   */
-  isReady() {
-    return this.isModelLoaded && this.generator !== null;
   }
 }
 

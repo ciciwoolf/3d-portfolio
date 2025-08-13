@@ -26,7 +26,6 @@ class BackgroundAPI {
       console.log('Background data loaded successfully');
       console.log('Data structure:', Object.keys(this.background));
       this.isInitialized = true;
-      
     } catch (error) {
       console.error('Failed to load background data:', error);
       this.setupFallback();
@@ -65,12 +64,12 @@ class BackgroundAPI {
         name: 'Christine Woolf',
         bio: 'Full Stack Developer passionate about modern web applications',
       },
-      skills: { 
-        frontend: { frameworks: ['React', 'Vue.js'] }, 
-        backend: { runtime: ['Node.js'] } 
+      skills: {
+        frontend: { frameworks: ['React', 'Vue.js'] },
+        backend: { runtime: ['Node.js'] },
       },
       projects: [],
-      experience: []
+      experience: [],
     };
     this.isInitialized = true;
   }
@@ -90,27 +89,49 @@ class BackgroundAPI {
     let context = this.getBasicPersonalInfo();
 
     // Direct keyword matching - simple and reliable
-    if (question.includes('skill') || question.includes('tech') || question.includes('programming')) {
+    if (
+      question.includes('skill') ||
+      question.includes('tech') ||
+      question.includes('programming')
+    ) {
       console.log('Skills question detected');
       context += this.getSkillsInfo();
     }
 
-    if (question.includes('project') || question.includes('work') || question.includes('portfolio')) {
+    if (
+      question.includes('project') ||
+      question.includes('work') ||
+      question.includes('portfolio')
+    ) {
       console.log('Projects question detected');
       context += this.getProjectsInfo();
     }
 
-    if (question.includes('education') || question.includes('study') || question.includes('school') || question.includes('college')) {
+    if (
+      question.includes('education') ||
+      question.includes('study') ||
+      question.includes('school') ||
+      question.includes('college')
+    ) {
       console.log('Education question detected');
       context += this.getEducationInfo();
     }
 
-    if (question.includes('experience') || question.includes('job') || question.includes('career')) {
+    if (
+      question.includes('experience') ||
+      question.includes('job') ||
+      question.includes('career')
+    ) {
       console.log('Experience question detected');
       context += this.getExperienceInfo();
     }
 
-    if (question.includes('name') || question.includes('woolf')) {
+    if (
+      question.includes('name') ||
+      question.includes('woolf') ||
+      question.includes('cici') ||
+      question.includes('christine')
+    ) {
       console.log('Name question detected');
       context += this.getNameInfo();
     }
@@ -121,8 +142,9 @@ class BackgroundAPI {
 
   getBasicPersonalInfo() {
     return `
-About Christine Woolf:
+About Christine Woolf (Cici):
 - Full name: Christine Woolf
+- Nickname: Cici (she goes by both names)
 - Current role: Full Stack Developer  
 - Location: Based in the United States
 `;
@@ -135,7 +157,7 @@ About Christine Woolf:
 
     const skills = this.background.skills;
     let skillsText = '\nSKILLS:\n';
-    
+
     if (skills.frontend?.frameworks) {
       skillsText += `- Frontend: ${skills.frontend.frameworks.join(', ')}\n`;
     }
@@ -158,7 +180,7 @@ About Christine Woolf:
     }
 
     let projectsText = '\nPROJECTS:\n';
-    this.background.projects.forEach(project => {
+    this.background.projects.forEach((project) => {
       projectsText += `- ${project.name}: ${project.description}\n`;
       if (project.technologies) {
         projectsText += `  Technologies: ${project.technologies.join(', ')}\n`;
@@ -180,10 +202,13 @@ EDUCATION:
   }
 
   getExperienceInfo() {
-    if (!this.background?.experience || this.background.experience.length === 0) {
+    if (
+      !this.background?.experience ||
+      this.background.experience.length === 0
+    ) {
       return `
 EXPERIENCE:
-- TSI Incorporated: 2.5 years building IoT data platforms for environmental monitoring
+- TSI Incorporated: 2.5 years developing Vue.js/TypeScript Excel Add-in for data visualization, with JavaScript and GoLang APIs for cloud data querying and user subscriptions
 - Science Museum of Minnesota: Interactive applications with React and Three.js  
 - Best Buy: E-commerce analytics and tag management systems
 - Specializes in Vue.js, React, Node.js, GoLang, and full-stack development
@@ -191,7 +216,7 @@ EXPERIENCE:
     }
 
     let expText = '\nEXPERIENCE:\n';
-    this.background.experience.forEach(exp => {
+    this.background.experience.forEach((exp) => {
       if (exp.company) {
         expText += `- ${exp.company}: ${exp.description || exp.role}\n`;
       }
@@ -204,8 +229,10 @@ EXPERIENCE:
     return `
 NAME DETAILS:
 - Full name: Christine Woolf
+- Nickname: Cici (she goes by both Christine and Cici)
 - Last name: Woolf
 - Professional name: Christine Woolf
+- About the nickname: Cici is a friendly, personal nickname that friends and colleagues often use
 `;
   }
 
