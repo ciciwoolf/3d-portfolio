@@ -1,5 +1,13 @@
-export const Button = ({ text, className, id }) => {
-  const handleClick = (e) => {
+import React from 'react';
+
+interface ButtonProps {
+  text: string;
+  className?: string;
+  id?: string;
+}
+
+export const Button = ({ text, className, id }: ButtonProps) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     // Store reference to avoid null issues in setTimeout
