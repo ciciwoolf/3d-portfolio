@@ -33,7 +33,7 @@ const AnimatedCounter = () => {
           ease: 'power2.out',
           snap: { innerText: 1 }, // Ensures whole numbers
           scrollTrigger: {
-            trigger: '#counter',
+            trigger: counterRef.current,
             start: 'top center',
           },
           // Add the suffix after counting is complete
