@@ -18,20 +18,23 @@ class AIService implements AIServiceConfig {
 
   async generateResponse(userQuestion: string): Promise<string> {
     if (!this.apiKey) {
-      console.log('OpenRouter API key not set, using fallback');
       return this.getFallbackResponse(userQuestion);
     }
+
     try {
       const context = backgroundAPI.getContextForAI(userQuestion);
+
       const result = await generateText({
         model: openRouter(this.model),
         prompt: userQuestion,
         system: `You are Christine's AI assistant. Always speak about Christine in third person (she/her). Never use first person language like "I", "me", or "call me". When someone mentions "Cici" or "Christine" or asks about names, always provide biographical information about Christine Woolf rather than treating it as a greeting. Keep responses under 150 words and always end with complete sentences. Use the following information: ${context}`,
         temperature: 0.7,
+        maxOutputTokens: 400,
       });
 
       let response = result.text.trim();
       response = this.cleanResponse(response);
+
       if (
         !response ||
         response.length < 5 ||
@@ -95,8 +98,6 @@ class AIService implements AIServiceConfig {
    * Fallback responses using the same context system
    */
   getFallbackResponse(userQuestion: string): string {
-    console.log('Using fallback response for:', userQuestion);
-
     const question = userQuestion.toLowerCase();
 
     // Education questions - very specific matching

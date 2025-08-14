@@ -76,7 +76,7 @@ const ChatWindow = ({ onClose }: ChatWindowProps): React.JSX.Element => {
       setIsTyping(false);
       addMessage(aiResponse, true);
     } catch (error) {
-      console.error('Error generating AI response:', error);
+      console.error('Error in chat response:', error);
       setIsTyping(false);
       addMessage(
         "I'm having trouble responding right now. Please try asking about Christine's skills, projects, or experience!",
