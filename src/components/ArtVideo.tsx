@@ -1,11 +1,14 @@
-'use client';
-
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { AdvancedVideo } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { quality, format } from '@cloudinary/url-gen/actions/delivery';
 
-const ArtVideo = ({ publicId, cloudName }) => {
+interface ArtVideoProps {
+  publicId: string;
+  cloudName: string;
+}
+
+const ArtVideo = ({ publicId, cloudName }: ArtVideoProps) => {
   const cld = useMemo(
     () => new Cloudinary({ cloud: { cloudName } }),
     [cloudName]
