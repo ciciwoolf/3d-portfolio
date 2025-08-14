@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import ChatInput from './ChatInput';
-import aiService from '../../data/worker.js';
+import aiService from '../../data/worker';
 
 /**
  * ChatWindow - The main chat interface
@@ -12,9 +12,21 @@ import aiService from '../../data/worker.js';
  * - Controls the chat UI layout and behavior
  * - Connects MessageBubble (display) with ChatInput (input)
  */
-const ChatWindow = ({ onClose }) => {
+
+interface Message {
+  id: number;
+  text: string;
+  isBot: boolean;
+  timestamp: Date;
+}
+
+interface ChatWindowProps {
+  onClose: () => void;
+}
+
+const ChatWindow = ({ onClose }: ChatWindowProps): React.JSX.Element => {
   // STATE: All messages in the conversation
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       text: "Hi! I'm Christine's AI assistant. Ask me about her skills, projects, or experience!",
@@ -24,13 +36,13 @@ const ChatWindow = ({ onClose }) => {
   ]);
 
   // STATE: Show "AI is typing..." indicator
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
   // REF: For auto-scrolling to bottom when new messages arrive
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // EFFECT: Auto-scroll when messages change
-  const scrollToBottom = () => {
+  const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -38,8 +50,8 @@ const ChatWindow = ({ onClose }) => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const addMessage = (text, isBot = false) => {
-    const newMessage = {
+  const addMessage = (text: string, isBot: boolean = false): void => {
+    const newMessage: Message = {
       id: Date.now(),
       text,
       isBot,
@@ -49,7 +61,7 @@ const ChatWindow = ({ onClose }) => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  const handleSendMessage = async (userMessage) => {
+  const handleSendMessage = async (userMessage: string): Promise<void> => {
     // 1. Add user message immediately
     addMessage(userMessage, false);
 

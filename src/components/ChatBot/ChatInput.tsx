@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 /**
  * ChatInput - Text input and send button component
@@ -9,11 +9,20 @@ import { useState } from 'react';
  * - Handles keyboard shortcuts (Enter to send)
  * - Communicates with ChatWindow via onSendMessage callback
  */
-const ChatInput = ({ onSendMessage }) => {
-  const [inputValue, setInputValue] = useState('');
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
+interface ChatInputProps {
+  onSendMessage: (message: string) => void;
+}
+
+const ChatInput = ({ onSendMessage }: ChatInputProps): React.JSX.Element => {
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    submitMessage();
+  };
+
+  const submitMessage = (): void => {
     const trimmedValue = inputValue.trim();
     if (!trimmedValue) return; // Don't send empty messages
 
@@ -23,10 +32,11 @@ const ChatInput = ({ onSendMessage }) => {
     // Clear input field
     setInputValue('');
   };
-  const handleKeyPress = (e) => {
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      submitMessage();
     }
     // Note: Shift+Enter could be used for new lines in future
   };

@@ -1,11 +1,12 @@
-import { Button } from '../components/Button.jsx';
-import { HeroExperience } from '../components/HeroModels/HeroExperience.jsx';
-import AnimatedCounter from '../components/AnimatedCounter.jsx';
-import { heroContent } from '../constants/index.js';
+import React from 'react';
+import { Button } from '../components/Button';
+import { HeroExperience } from '../components/HeroModels/HeroExperience';
+import AnimatedCounter from '../components/AnimatedCounter';
+import { heroContent } from '../constants/index';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-const Hero = () => {
+const Hero = (): React.JSX.Element => {
   useGSAP(() => {
     gsap.fromTo(
       '.hero-text h1',

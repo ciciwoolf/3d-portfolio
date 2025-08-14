@@ -1,14 +1,22 @@
-import { openRouter } from '../lib/ai.js';
+import { openRouter } from '../lib/ai';
 import { generateText } from 'ai';
-import backgroundAPI from './background-api.js';
+import backgroundAPI from './background-api';
 
-class AIService {
+interface AIServiceConfig {
+  apiKey: boolean;
+  model: string;
+}
+
+class AIService implements AIServiceConfig {
+  public apiKey: boolean;
+  public model: string;
+
   constructor() {
     this.apiKey = !!import.meta.env.VITE_OPENROUTER_API_KEY;
     this.model = 'openai/gpt-oss-20b:free';
   }
 
-  async generateResponse(userQuestion) {
+  async generateResponse(userQuestion: string): Promise<string> {
     if (!this.apiKey) {
       console.log('OpenRouter API key not set, using fallback');
       return this.getFallbackResponse(userQuestion);
@@ -20,7 +28,6 @@ class AIService {
         prompt: userQuestion,
         system: `You are Christine's AI assistant. Always speak about Christine in third person (she/her). Never use first person language like "I", "me", or "call me". When someone mentions "Cici" or "Christine" or asks about names, always provide biographical information about Christine Woolf rather than treating it as a greeting. Keep responses under 150 words and always end with complete sentences. Use the following information: ${context}`,
         temperature: 0.7,
-        maxTokens: 400,
       });
 
       let response = result.text.trim();
@@ -42,7 +49,7 @@ class AIService {
     }
   }
 
-  cleanResponse(response) {
+  cleanResponse(response: string): string {
     let cleaned = response
       .split('\n')[0]
       .replace(/^(Answer:|Response:|A:|Q:)/i, '')
@@ -87,7 +94,7 @@ class AIService {
   /**
    * Fallback responses using the same context system
    */
-  getFallbackResponse(userQuestion) {
+  getFallbackResponse(userQuestion: string): string {
     console.log('Using fallback response for:', userQuestion);
 
     const question = userQuestion.toLowerCase();
