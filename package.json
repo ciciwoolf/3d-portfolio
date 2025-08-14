@@ -8,7 +8,9 @@
     "network": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "npx tsc --noEmit",
+    "pre-commit": "npm run type-check && npm run lint"
   },
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
