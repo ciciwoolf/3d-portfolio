@@ -1,0 +1,96 @@
+interface HeroContent {
+  heroTitleWord: string;
+  animatedWord: string;
+  heroSubtitle: string;
+  heroIntroduction: string;
+}
+
+interface NavLink {
+  name: string;
+  link: string;
+}
+
+interface CounterItem {
+  value: number;
+  suffix: string;
+  label: string;
+}
+
+interface DigitalWork {
+  id: number;
+  publicId: string;
+  cloudName: string;
+  header: string;
+}
+
+interface Skill {
+  imgPath: string;
+  title: string;
+  desc: string;
+}
+
+// Export types for use in other components
+export type { HeroContent, NavLink, CounterItem, DigitalWork, Skill };
+
+export const heroContent: HeroContent = {
+  heroTitleWord: 'Engineering',
+  animatedWord: 'Ideas',
+  heroSubtitle: 'Into Seamless Digital Experiences',
+  heroIntroduction:
+    "I'm Christine Woolf, a Full Stack Software Developer crafting intuitive user interfaces and accessible, responsive software applications.",
+};
+
+export const navLinks: NavLink[] = [
+  {
+    name: 'Work',
+    link: '#work',
+  },
+  {
+    name: 'Skills',
+    link: '#skills',
+  },
+];
+
+export const counterItems: CounterItem[] = [
+  { value: 3, suffix: '+', label: 'Years of Experience' },
+  { value: 10, suffix: '+', label: 'Projects' },
+  { value: 3, suffix: '+', label: 'Hackathons' },
+];
+
+export const digitalWorks: DigitalWork[] = [
+  {
+    id: 1,
+    publicId: 'violetRiver_dqkufw',
+    cloudName: 'dmezw1zxr',
+    header: 'Violet River',
+  },
+  {
+    id: 2,
+    publicId: 'spiderweb_yypefc',
+    cloudName: 'dmezw1zxr',
+    header: 'SpiderWeb.js',
+  },
+];
+
+export const skills: Skill[] = [
+  {
+    imgPath: '/images/detail.png',
+    title: 'Detail-Oriented Development',
+    desc: 'Bringing precision and care to every project, from clean UI components to scalable backend logic.',
+  },
+  {
+    imgPath: '/images/comm.png',
+    title: 'Collaborative Communication',
+    desc: 'Keeping teams and stakeholders in the loop, value feedback, and speak both tech and user-friendly language.',
+  },
+  {
+    imgPath: '/images/time.png',
+    title: 'Dependable Delivery',
+    desc: 'Shipping thoughtful, tested features on time — even under tight timelines.',
+  },
+  {
+    imgPath: '/images/tests.png',
+    title: 'Testing for Confidence',
+    desc: 'Dedication to writing unit and e2e tests to ensure clean code and reliable functionality.',
+  },
+];
