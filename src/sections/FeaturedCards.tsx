@@ -1,0 +1,24 @@
+import React from 'react';
+import { skills } from '../constants';
+
+const FeaturedCards = (): React.JSX.Element => (
+  <div className="w-full padding-x-lg">
+    <div id="skills" className="mx-auto grid-4-cols ">
+      {skills.map(({ imgPath, title, desc }) => (
+        <div
+          key={title}
+          className="card-border rounded-xl p-8 flex flex-col gap-4 pb-[50px]"
+        >
+          <div className="size-12 flex items-center justify-center rounded-full">
+            <img src={imgPath} alt={title} />
+          </div>
+          <h3 className="text-white text-2xl font-semibold mt-2">{title}</h3>
+          <p className="text-white-50 text-lg">{desc}</p>
+        </div>
+      ))}
+    </div>
+    <div className="h-20 w-full"></div>
+  </div>
+);
+
+export default FeaturedCards;

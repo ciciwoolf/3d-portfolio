@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * MessageBubble - Displays individual chat messages
  *
@@ -7,11 +9,22 @@
  * - Formats timestamps
  * - Handles text wrapping
  */
-const MessageBubble = ({ message }) => {
+
+interface Message {
+  text: string;
+  isBot: boolean;
+  timestamp: Date;
+}
+
+interface MessageBubbleProps {
+  message: Message;
+}
+
+const MessageBubble = ({ message }: MessageBubbleProps): React.JSX.Element => {
   const { text, isBot, timestamp } = message;
 
   // Format time as "2:30 PM"
-  const formatTime = (date) => {
+  const formatTime = (date: Date): string => {
     return new Intl.DateTimeFormat('en-US', {
       hour: '2-digit',
       minute: '2-digit',

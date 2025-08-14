@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ChatWindow from './ChatWindow';
 
 /**
@@ -9,10 +9,10 @@ import ChatWindow from './ChatWindow';
  * - Toggles the chat window open/closed
  * - Manages the overall chat visibility state
  */
-const ChatWidget = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const ChatWidget = (): React.JSX.Element => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const toggleChat = () => {
+  const toggleChat = (): void => {
     setIsOpen(!isOpen);
   };
 

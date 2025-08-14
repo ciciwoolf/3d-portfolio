@@ -1,9 +1,13 @@
+import type { BackgroundData, IBackgroundAPI } from './types';
+
 /**
  * Background API - Simple keyword-based retrieval system
- * No more Fuse.js complexity - just direct keyword matching
  */
 
-class BackgroundAPI {
+class BackgroundAPI implements IBackgroundAPI {
+  public background: BackgroundData | null;
+  public isInitialized: boolean;
+
   constructor() {
     this.background = null;
     this.isInitialized = false;
@@ -13,60 +17,73 @@ class BackgroundAPI {
   /**
    * Load the background data
    */
-  async loadBackground() {
-    console.log('Loading background data...');
-
+  async loadBackground(): Promise<void> {
     try {
-      await this.tryLoadMethods();
-
-      if (!this.background) {
-        throw new Error('Failed to load background data');
-      }
-
-      console.log('Background data loaded successfully');
-      console.log('Data structure:', Object.keys(this.background));
-      this.isInitialized = true;
-    } catch (error) {
-      console.error('Failed to load background data:', error);
-      this.setupFallback();
-    }
-  }
-
-  async tryLoadMethods() {
-    // Method 1: Dynamic import
-    try {
-      console.log('  Trying dynamic import...');
+      // Try dynamic import first (preferred method)
       const module = await import('./background.json');
       this.background = module.default || module;
-      console.log('  Dynamic import successful');
-      return;
-    } catch (error) {
-      console.log('  Method 1 failed:', error.message);
-    }
-
-    // Method 2: Fetch from public folder
-    try {
-      console.log('  Trying fetch from /background.json...');
-      const response = await fetch('/background.json');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      this.background = await response.json();
-      console.log('  ✅Fetch successful');
-      return;
-    } catch (error) {
-      console.log('  Method 2 failed:', error.message);
+      this.isInitialized = true;
+    } catch {
+      // Fallback to fetch from public folder
+      try {
+        const response = await fetch('/background.json');
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        this.background = await response.json();
+        this.isInitialized = true;
+      } catch {
+        // Use hardcoded fallback data
+        this.setupFallback();
+      }
     }
   }
 
-  setupFallback() {
-    console.log('Setting up fallback data...');
+  setupFallback(): void {
     this.background = {
       personal: {
         name: 'Christine Woolf',
+        nickname: 'Cici',
+        title: 'Full Stack Developer',
         bio: 'Full Stack Developer passionate about modern web applications',
+        location: 'Based in the United States',
+        personality: 'friendly, professional, enthusiastic',
+        communication_style: 'clear, helpful, detail-oriented',
+        interests: ['Web Development', 'React', 'Vue.js'],
+        languages: ['English'],
+        education: {
+          undergraduate:
+            'Triple major in Philosophy, German, and Spanish at Concordia College',
+          graduate: "Master's in Religious History at Luther Seminary",
+          international:
+            'Senior year at Friedrich Schiller Universität in Germany',
+          bootcamp: 'Web Development bootcamp at Digitalhouse in Buenos Aires',
+        },
       },
       skills: {
-        frontend: { frameworks: ['React', 'Vue.js'] },
-        backend: { runtime: ['Node.js'] },
+        frontend: {
+          frameworks: ['React', 'Vue.js'],
+          languages: ['JavaScript', 'TypeScript'],
+          styling: ['CSS', 'Tailwind CSS'],
+          libraries: ['Three.js'],
+          advanced_patterns: ['Custom hooks', 'Context providers'],
+        },
+        backend: {
+          runtime: ['Node.js'],
+          apis: ['REST APIs', 'GraphQL'],
+          databases: ['MongoDB'],
+          tools: ['Express.js'],
+          specialties: ['API development'],
+        },
+        tools: {
+          development: ['Git', 'VS Code'],
+          design: ['Figma'],
+          deployment: ['Vercel'],
+          testing: ['Jest'],
+        },
+        architecture: {
+          principles: ['Scalability', 'Maintainability'],
+          patterns: ['Component reusability'],
+          experience: ['Multi-environment deployment'],
+        },
       },
       projects: [],
       experience: [],
@@ -77,24 +94,20 @@ class BackgroundAPI {
   /**
    * Main method for getting context - Simple keyword matching
    */
-  getContextForAI(userQuestion) {
-    console.log('🤖 getContextForAI called with:', userQuestion);
-
+  getContextForAI(userQuestion: string): string {
     if (!this.isInitialized) {
-      console.warn('API not ready, using fallback');
       return this.getDefaultContext();
     }
 
     const question = userQuestion.toLowerCase();
     let context = this.getBasicPersonalInfo();
 
-    // Direct keyword matching - simple and reliable
+    // Direct keyword matching
     if (
       question.includes('skill') ||
       question.includes('tech') ||
       question.includes('programming')
     ) {
-      console.log('Skills question detected');
       context += this.getSkillsInfo();
     }
 
@@ -103,7 +116,6 @@ class BackgroundAPI {
       question.includes('work') ||
       question.includes('portfolio')
     ) {
-      console.log('Projects question detected');
       context += this.getProjectsInfo();
     }
 
@@ -113,7 +125,6 @@ class BackgroundAPI {
       question.includes('school') ||
       question.includes('college')
     ) {
-      console.log('Education question detected');
       context += this.getEducationInfo();
     }
 
@@ -122,7 +133,6 @@ class BackgroundAPI {
       question.includes('job') ||
       question.includes('career')
     ) {
-      console.log('Experience question detected');
       context += this.getExperienceInfo();
     }
 
@@ -132,15 +142,13 @@ class BackgroundAPI {
       question.includes('cici') ||
       question.includes('christine')
     ) {
-      console.log('Name question detected');
       context += this.getNameInfo();
     }
 
-    console.log('Final context length:', context.length);
     return context;
   }
 
-  getBasicPersonalInfo() {
+  getBasicPersonalInfo(): string {
     return `
 About Christine Woolf (Cici):
 - Full name: Christine Woolf
@@ -150,12 +158,12 @@ About Christine Woolf (Cici):
 `;
   }
 
-  getSkillsInfo() {
+  getSkillsInfo(): string {
     if (!this.background?.skills) {
       return '\nSKILLS: React, Vue.js, Node.js, JavaScript, TypeScript\n';
     }
 
-    const skills = this.background.skills;
+    const { skills } = this.background;
     let skillsText = '\nSKILLS:\n';
 
     if (skills.frontend?.frameworks) {
@@ -174,8 +182,8 @@ About Christine Woolf (Cici):
     return skillsText;
   }
 
-  getProjectsInfo() {
-    if (!this.background?.projects || this.background.projects.length === 0) {
+  getProjectsInfo(): string {
+    if (!this.background?.projects?.length) {
       return '\nPROJECTS: 3D Interactive Portfolio built with React, Three.js, and modern web technologies\n';
     }
 
@@ -190,7 +198,7 @@ About Christine Woolf (Cici):
     return projectsText;
   }
 
-  getEducationInfo() {
+  getEducationInfo(): string {
     return `
 EDUCATION:
 - Triple major in Philosophy, German, and Spanish at Concordia College
@@ -201,11 +209,8 @@ EDUCATION:
 `;
   }
 
-  getExperienceInfo() {
-    if (
-      !this.background?.experience ||
-      this.background.experience.length === 0
-    ) {
+  getExperienceInfo(): string {
+    if (!this.background?.experience?.length) {
       return `
 EXPERIENCE:
 - TSI Incorporated: 2.5 years developing Vue.js/TypeScript Excel Add-in for data visualization, with JavaScript and GoLang APIs for cloud data querying and user subscriptions
@@ -217,15 +222,13 @@ EXPERIENCE:
 
     let expText = '\nEXPERIENCE:\n';
     this.background.experience.forEach((exp) => {
-      if (exp.company) {
-        expText += `- ${exp.company}: ${exp.description || exp.role}\n`;
-      }
+      expText += `- ${exp.company}: ${exp.description || exp.role}\n`;
     });
 
     return expText;
   }
 
-  getNameInfo() {
+  getNameInfo(): string {
     return `
 NAME DETAILS:
 - Full name: Christine Woolf
@@ -236,20 +239,8 @@ NAME DETAILS:
 `;
   }
 
-  getDefaultContext() {
+  getDefaultContext(): string {
     return 'Christine Woolf is a Full Stack Developer passionate about building modern web applications with React, Vue.js, Node.js, and GraphQL. She specializes in UI/UX design and creating accessible, responsive web experiences.';
-  }
-
-  /**
-   * Debug helper
-   */
-  debugState() {
-    console.log('🔍 Background API Debug:');
-    console.log('  Initialized:', this.isInitialized);
-    console.log('  Has data:', !!this.background);
-    if (this.background) {
-      console.log('  Keys:', Object.keys(this.background));
-    }
   }
 }
 

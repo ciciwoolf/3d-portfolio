@@ -1,12 +1,27 @@
-import { useRef, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 
-const Particles = ({ count = 200, maxCount = 200 }) => {
-  const mesh = useRef();
+interface ParticlesProps {
+  count?: number;
+  maxCount?: number;
+}
+
+interface Particle {
+  position: [number, number, number];
+  speed: number;
+  active: boolean;
+}
+
+const Particles = ({
+  count = 200,
+  maxCount = 200,
+}: ParticlesProps): React.JSX.Element => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const mesh = useRef<any>(null);
 
   // Always use maxCount for buffer size, but only animate 'count' particles
-  const particles = useMemo(() => {
-    const temp = [];
+  const particles = useMemo((): Particle[] => {
+    const temp: Particle[] = [];
     for (let i = 0; i < maxCount; i++) {
       temp.push({
         position: [
@@ -22,6 +37,7 @@ const Particles = ({ count = 200, maxCount = 200 }) => {
   }, [maxCount, count]);
 
   useFrame(() => {
+    if (!mesh.current) return;
     const positions = mesh.current.geometry.attributes.position.array;
     for (let i = 0; i < maxCount; i++) {
       if (i < count) {
@@ -63,6 +79,7 @@ const Particles = ({ count = 200, maxCount = 200 }) => {
           count={maxCount}
           array={positions}
           itemSize={3}
+          args={[positions, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
