@@ -1,7 +1,7 @@
 
-# 🐺 Christine Woolf – Web Developer Portfolio
+# 🐺 Christine Woolf – Frontend Developer Portfolio
 
-Hi! I'm Christine Woolf, a Full Stack Developer passionate about crafting intuitive user interfaces and building accessible, responsive web applications. My work spans frontend development with modern frameworks like React and Vue, and backend experience building APIs and services with Node.js, GraphQL, and MongoDB. I thrive on solving real-world problems and bringing ideas to life through code.
+Hi! I'm Christine Woolf, a frontend-focused Full Stack Developer passionate about crafting intuitive user interfaces and building accessible, responsive web applications. My work spans frontend development with modern frameworks like React and Vue, and backend experience building APIs and services with Node.js, GraphQL, and MongoDB. I thrive on solving real-world problems and bringing ideas to life through code.
 
 ## What I Do
 
