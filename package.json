@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "network": "vite --host 0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && node scripts/update-service-worker.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "type-check": "npx tsc --noEmit",
